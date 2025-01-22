@@ -1,14 +1,14 @@
-﻿using System.Diagnostics;
+﻿using Data.Context;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace Data.Repositories;
 
-public abstract class BaseRepository<TEntity> where TEntity : class
+public abstract class BaseRepository<TEntity>(DataContext context) where TEntity : class
 {
-    //private readonly DataContext _context;
-    //private readonly DbSet<TEntity> _dbset;
-
-    //lägga in i ctor
+    private readonly DataContext _context = context;
+    private readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 
     public virtual async Task<TEntity> CreateAsync(TEntity entity)
     {
@@ -17,7 +17,7 @@ public abstract class BaseRepository<TEntity> where TEntity : class
 
         try
         {
-            await _dbset.AddAsync(entity);
+            await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
             return entity;
 
@@ -31,7 +31,7 @@ public abstract class BaseRepository<TEntity> where TEntity : class
 
     public virtual async Task<IEnumerable<TEntity>> ReadAllAsync()
     {
-        return await _dbset.ToListAsync();
+        return await _dbSet.ToListAsync();
     }
 
     public virtual async Task<TEntity> ReadAsync(Expression<Func<TEntity, bool>> expression)
@@ -39,7 +39,7 @@ public abstract class BaseRepository<TEntity> where TEntity : class
         if (expression == null)
             return null!;
 
-        return await _dbset.FirstOrDefaultAsync(expression) ?? null!;
+        return await _dbSet.FirstOrDefaultAsync(expression) ?? null!;
     }
 
     public virtual async Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity newEntity)
@@ -49,13 +49,15 @@ public abstract class BaseRepository<TEntity> where TEntity : class
 
         try
         {
-            var oldEntity = await _dbset.FirstOrDefault(expression) ?? null!;
+            var oldEntity = await _dbSet.FirstOrDefaultAsync(expression)
+                ?? null!;
+
             if (oldEntity == null)
                 return null!;
 
             _context.Entry(oldEntity).CurrentValues.SetValues(newEntity);
             await _context.SaveChangesAsync();
-            return oldEntity;
+            return oldEntity!;
 
         }
 
@@ -73,11 +75,11 @@ public abstract class BaseRepository<TEntity> where TEntity : class
 
         try
         {
-            var oldEntity = await _dbset.FirstOrDefault(expression) ?? null!;
+            var oldEntity = await _dbSet.FirstOrDefaultAsync(expression) ?? null!;
             if (oldEntity == null)
                 return false;
 
-            _dbset.Remove(oldEntity);
+            _dbSet.Remove(oldEntity);
             await _context.SaveChangesAsync();
             return true;
         }
@@ -91,7 +93,7 @@ public abstract class BaseRepository<TEntity> where TEntity : class
 
     public virtual async Task<bool> DoesItExistAsync(Expression<Func<TEntity, bool>> expression)
     {
-        return await _dbset.AnyAsync(expression);
+        return await _dbSet.AnyAsync(expression);
     }
 
 }
