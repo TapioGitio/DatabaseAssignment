@@ -17,4 +17,6 @@ public class ProjectManagerEntity
     [Column (TypeName = "varchar(20)")]
     public string PhoneNumber { get; set; } = null!;
 
+    public ICollection<ProjectEntity> projects { get; set; } = null!;
+
 }

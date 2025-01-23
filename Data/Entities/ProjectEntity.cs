@@ -13,6 +13,14 @@ public class ProjectEntity
 
     [Required]
     public DateTime StartDate { get; set; } = DateTime.Now;
-
     public DateTime EndDate { get; set; }
+
+    public int StatusId { get; set; }
+    public StatusEntity Status { get; set; } = null!;
+
+    public int ProjectManagerId { get; set; }
+    public ProjectManagerEntity ProjectManager { get; set; } = null!;
+
+    public int CustomerId { get; set; }
+    public CustomerEntity Customer { get; set; } = null!;
 }

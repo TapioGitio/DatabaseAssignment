@@ -17,5 +17,6 @@ public class CustomerEntity
     [Column(TypeName = "varchar(200)")]
     public string Email { get; set; } = null!;
 
+    public ICollection<ProjectEntity> projects { get; set; } = null!;
 
 }
