@@ -3,20 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Entities;
 
-public class ProjectManagerEntity
+public class ServiceEntity
 {
     [Key]
     public int Id { get; set; }
-
     [Column (TypeName = "nvarchar(50)")]
-    public string FirstName { get; set; } = null!;
-
-    [Column(TypeName = "nvarchar(50)")]
-    public string LastName { get; set; } = null!;
-
-    [Column (TypeName = "varchar(20)")]
-    public string PhoneNumber { get; set; } = null!;
-
+    public string ServiceName { get; set; } = null!;
+    public decimal Price { get; set; }
     public ICollection<ProjectEntity> Projects { get; set; } = null!;
-
 }

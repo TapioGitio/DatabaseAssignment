@@ -17,6 +17,8 @@ public class ProjectEntity
 
     public int StatusId { get; set; }
     public StatusEntity Status { get; set; } = null!;
+    public int ServiceId { get; set; }
+    public ServiceEntity Service { get; set; } = null!;
 
     public int ProjectManagerId { get; set; }
     public ProjectManagerEntity ProjectManager { get; set; } = null!;

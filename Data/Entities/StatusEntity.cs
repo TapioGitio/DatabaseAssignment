@@ -11,5 +11,5 @@ public class StatusEntity
     [Column (TypeName = "nvarchar(15)")]
     public string Status { get; set; } = null!;
 
-    public ICollection<ProjectEntity> projects { get; set; } = null!;
+    public ICollection<ProjectEntity> Projects { get; set; } = null!;
 }
