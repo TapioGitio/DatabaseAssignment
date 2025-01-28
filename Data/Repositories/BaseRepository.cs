@@ -11,22 +11,22 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     protected readonly DataContext _context = context;
     protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 
-    public virtual async Task<TEntity> CreateAsync(TEntity entity)
+    public virtual async Task<bool> CreateAsync(TEntity entity)
     {
         if (entity == null)
-            return null!;
+            return false!;
 
         try
         {
             await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
-            return entity;
+            return true;
 
         }
         catch (Exception ex)
         {
             Debug.WriteLine($"Failure creating this entity: {nameof(TEntity)}, {ex.Message}");
-            return null!;
+            return false!;
         }
     }
 
@@ -51,10 +51,10 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         return await query.FirstOrDefaultAsync(expression);
     }   
 
-    public virtual async Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity newEntity)
+    public virtual async Task<bool> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity newEntity)
     {
         if (newEntity == null)
-            return null!;
+            return false!;
 
         try
         {
@@ -62,18 +62,18 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
                 ?? null!;
 
             if (oldEntity == null)
-                return null!;
+                return false!;
 
             _context.Entry(oldEntity).CurrentValues.SetValues(newEntity);
             await _context.SaveChangesAsync();
-            return oldEntity!;
+            return true;
 
         }
 
         catch (Exception ex)
         {
             Debug.WriteLine($"Failure updating this entity: {nameof(TEntity)}, {ex.Message}");
-            return null!;
+            return false!;
         }
     }
 
