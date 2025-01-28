@@ -7,9 +7,8 @@ namespace Data.Repositories;
 
 public class ProjectRepository(DataContext context) : BaseRepository<ProjectEntity>(context), IProjectRepository
 {
-    private readonly DataContext _context = context;
 
-    public async Task<List<ProjectEntity>> ReadDetailedAsync(ProjectEntity entity)
+    public async Task<IEnumerable<ProjectEntity>> ReadDetailedAsync(ProjectEntity entity)
     {
         if (entity == null)
             return null!;
@@ -20,7 +19,7 @@ public class ProjectRepository(DataContext context) : BaseRepository<ProjectEnti
             .Include(x => x.Service)
             .Include(x => x.Customer)
             .ToListAsync();
-
+        
         return await combineEntities;
     }
 }
