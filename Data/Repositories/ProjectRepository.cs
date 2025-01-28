@@ -8,19 +8,14 @@ namespace Data.Repositories;
 public class ProjectRepository(DataContext context) : BaseRepository<ProjectEntity>(context), IProjectRepository
 {
 
-    public async Task<IEnumerable<ProjectEntity>> ReadDetailedAsync(ProjectEntity entity)
+    public async Task<ProjectEntity?> ReadDetailedAsync(int projectId)
     {
-        if (entity == null)
-            return null!;
-
-        var combineEntities = _context.Projects
+        return await _dbSet
             .Include(x => x.ProjectManager)
             .Include(x => x.Status)
             .Include(x => x.Service)
             .Include(x => x.Customer)
-            .ToListAsync();
-        
-        return await combineEntities;
+            .FirstOrDefaultAsync(x => x.Id == projectId); 
     }
 }
 

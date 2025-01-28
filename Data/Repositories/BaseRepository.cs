@@ -30,18 +30,26 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         }
     }
 
-    public virtual async Task<IEnumerable<TEntity>> ReadAllAsync()
+    public virtual async Task<IEnumerable<TEntity>> ReadAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>>? optionalExpression = null)
     {
-        return await _dbSet.ToListAsync();
+        IQueryable<TEntity> query = _dbSet;
+
+        if (optionalExpression != null)
+            query = optionalExpression(query);
+
+        return await query.ToListAsync();
     }
 
-    public virtual async Task<TEntity> ReadAsync(Expression<Func<TEntity, bool>> expression)
-    {
-        if (expression == null)
-            return null!;
 
-        return await _dbSet.FirstOrDefaultAsync(expression) ?? null!;
-    }
+    public virtual async Task<TEntity?> ReadAsync(Expression<Func<TEntity, bool>> expression, Func<IQueryable<TEntity>, IQueryable<TEntity>>? optionalExpression = null)
+    {
+        IQueryable<TEntity> query = _dbSet;
+
+        if (optionalExpression != null)
+            query = optionalExpression(query);
+
+        return await query.FirstOrDefaultAsync(expression);
+    }   
 
     public virtual async Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity newEntity)
     {
@@ -96,5 +104,6 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     {
         return await _dbSet.AnyAsync(expression);
     }
+
 
 }
