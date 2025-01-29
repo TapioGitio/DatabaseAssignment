@@ -7,7 +7,7 @@ namespace Data.Repositories;
 
 public class ProjectRepository(DataContext context) : BaseRepository<ProjectEntity>(context), IProjectRepository
 {
-
+    
     public async Task<ProjectEntity?> ReadDetailedAsync(int projectId)
     {
         return await _dbSet

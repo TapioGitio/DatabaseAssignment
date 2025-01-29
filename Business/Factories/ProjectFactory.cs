@@ -17,7 +17,7 @@ public static class ProjectFactory
         };
     }
 
-    public static ProjectOverallView CreateMinor(ProjectEntity entity)
+    public static ProjectOverallView Create(ProjectEntity entity)
     {
         return new ProjectOverallView
         {
@@ -27,8 +27,17 @@ public static class ProjectFactory
             EndDate = entity.EndDate,
         };
     }
-
-    public static ProjectDetailedView CreateMajor(ProjectEntity projectEntity, StatusEntity statusEntity, ServiceEntity serviceEntity,ProjectManagerEntity projectManagerEntity, CustomerEntity customerEntity)
+    public static ProjectEntity Update(ProjectEntity projectEntity, ProjectUpdateForm form)
+    {
+        return new ProjectEntity
+        {
+            Id = projectEntity.Id,
+            Name = form.Name,
+            StartDate = projectEntity.StartDate,
+            EndDate = form.EndDate,
+        };
+    }
+    public static ProjectDetailedView CreateMajor(ProjectEntity projectEntity)
     {
         return new ProjectDetailedView
         {
@@ -37,18 +46,19 @@ public static class ProjectFactory
             StartDate = projectEntity.StartDate,
             EndDate = projectEntity.EndDate,
 
-            Status = statusEntity.Status,
+            Status = projectEntity.Status.Status,
 
-            ServiceName = serviceEntity.ServiceName,
-            Price = serviceEntity.Price,
+            ServiceName = projectEntity.Service.ServiceName,
+            Price = projectEntity.Service.Price,
 
-            ManagerFirstName = projectManagerEntity.FirstName,
-            ManagerLastName = projectManagerEntity.LastName,
-            ManagerPhoneNumber = projectManagerEntity.PhoneNumber,
+            ManagerFirstName = projectEntity.ProjectManager.FirstName,
+            ManagerLastName = projectEntity.ProjectManager.LastName,
+            ManagerPhoneNumber = projectEntity.ProjectManager.PhoneNumber,
 
-            CustomerFirstName = customerEntity.FirstName,
-            CustomerLastName = customerEntity.LastName,
-            CustomerEmail = customerEntity.Email,
+            CustomerFirstName = projectEntity.Customer.FirstName,
+            CustomerLastName = projectEntity.Customer.LastName,
+            CustomerEmail = projectEntity.Customer.Email,
         };
     }
+
 }
