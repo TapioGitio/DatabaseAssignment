@@ -1,10 +1,11 @@
 ﻿using Business.Factories;
+using Business.Interfaces;
 using Business.Models;
 using Data.Interfaces;
 
 namespace Business.Services;
 
-public class ProjectService(IProjectRepository projectRepository)
+public class ProjectService(IProjectRepository projectRepository) : IProjectService
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
 
@@ -27,12 +28,12 @@ public class ProjectService(IProjectRepository projectRepository)
 
     public async Task<ProjectDetailedView> ReadOneDetailedAsync(int id)
     {
-        var entities = await _projectRepository.ReadDetailedAsync(id);
+        var entity = await _projectRepository.ReadDetailedAsync(id);
 
-        if (entities == null)
+        if (entity == null)
             return null!;
 
-        var converted = ProjectFactory.CreateMajor(entities);
+        var converted = ProjectFactory.CreateMajor(entity);
 
         return converted;
     }
@@ -47,7 +48,17 @@ public class ProjectService(IProjectRepository projectRepository)
 
         var updatedEntity = ProjectFactory.Update(entity, form);
 
-        return await _projectRepository.UpdateAsync(x => x.Id == id, updatedEntity);
+        var result = await _projectRepository.UpdateAsync(x => x.Id == id, updatedEntity);
+        return result;
+    }
 
+    public async Task<bool> DeleteProjectAsync(int id)
+    {
+        var question = await _projectRepository.DoesItExistAsync(x => x.Id == id);
+
+        if (question == false)
+            return false;
+
+        return await _projectRepository.DeleteAsync(x => x.Id == id);
     }
 }

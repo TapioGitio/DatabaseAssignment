@@ -30,23 +30,23 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         }
     }
 
-    public virtual async Task<IEnumerable<TEntity>> ReadAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>>? optionalExpression = null)
+    public virtual async Task<IEnumerable<TEntity>> ReadAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeExpression = null)
     {
         IQueryable<TEntity> query = _dbSet;
 
-        if (optionalExpression != null)
-            query = optionalExpression(query);
+        if (includeExpression != null)
+            query = includeExpression(query);
 
         return await query.ToListAsync();
     }
 
 
-    public virtual async Task<TEntity?> ReadAsync(Expression<Func<TEntity, bool>> expression, Func<IQueryable<TEntity>, IQueryable<TEntity>>? optionalExpression = null)
+    public virtual async Task<TEntity?> ReadAsync(Expression<Func<TEntity, bool>> expression, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeExpression = null)
     {
         IQueryable<TEntity> query = _dbSet;
 
-        if (optionalExpression != null)
-            query = optionalExpression(query);
+        if (includeExpression != null)
+            query = includeExpression(query);
 
         return await query.FirstOrDefaultAsync(expression);
     }   
