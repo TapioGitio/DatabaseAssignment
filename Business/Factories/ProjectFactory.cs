@@ -17,7 +17,18 @@ public static class ProjectFactory
         };
     }
 
-    public static ProjectDetailedView Create(ProjectEntity projectEntity, StatusEntity statusEntity, ServiceEntity serviceEntity,ProjectManagerEntity projectManagerEntity, CustomerEntity customerEntity)
+    public static ProjectOverallView CreateMinor(ProjectEntity entity)
+    {
+        return new ProjectOverallView
+        {
+            Id = entity.Id,
+            Name = entity.Name,
+            StartDate = entity.StartDate,
+            EndDate = entity.EndDate,
+        };
+    }
+
+    public static ProjectDetailedView CreateMajor(ProjectEntity projectEntity, StatusEntity statusEntity, ServiceEntity serviceEntity,ProjectManagerEntity projectManagerEntity, CustomerEntity customerEntity)
     {
         return new ProjectDetailedView
         {
