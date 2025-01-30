@@ -23,7 +23,7 @@ serviceCollection.AddScoped<IServiceService, ServiceService>();
 
 serviceCollection.AddScoped<MenuDialog>();
 
-
+ 
 var serviceProvider = serviceCollection.BuildServiceProvider();
 
 var menu = serviceProvider.GetRequiredService<MenuDialog>();
