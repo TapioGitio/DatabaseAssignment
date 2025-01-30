@@ -2,6 +2,7 @@
 using Business.Interfaces;
 using Business.Models;
 using Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services;
 
@@ -20,7 +21,9 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
 
     public async Task<IEnumerable<ProjectOverallView>> ReadAllWithoutDetailsAsync()
     {
-        var entities = await _projectRepository.ReadAllAsync();
+        var entities = await _projectRepository.ReadAllAsync(query =>
+            query.Include(status => status.Status));
+
         var converted = entities.Select(ProjectFactory.Create);
 
         return converted;
