@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Business.Models;
+namespace Business.Models.RegForms;
 
 public class CustomerRegistrationForm
 {

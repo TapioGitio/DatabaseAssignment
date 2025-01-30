@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Business.Models;
+namespace Business.Models.UpdateForms;
 
-public class ProjectManagerRegistrationForm
+public class ProjectManagerUpdateForm
 {
     [Column(TypeName = "nvarchar(50)")]
     public string FirstName { get; set; } = null!;
@@ -13,3 +13,4 @@ public class ProjectManagerRegistrationForm
     [Column(TypeName = "varchar(20)")]
     public string PhoneNumber { get; set; } = null!;
 }
+

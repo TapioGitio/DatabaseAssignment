@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Business.Models;
+namespace Business.Models.UpdateForms;
 
-public class StatusRegistrationForm
+public class StatusUpdateForm
 {
+
     [Column(TypeName = "nvarchar(15)")]
     public string Status { get; set; } = null!;
 }
+

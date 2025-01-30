@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Business.Models;
+namespace Business.Models.RegForms;
 
 public class ProjectRegistrationForm
 {

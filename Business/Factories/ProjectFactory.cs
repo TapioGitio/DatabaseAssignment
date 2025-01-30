@@ -1,4 +1,6 @@
 ﻿using Business.Models;
+using Business.Models.RegForms;
+using Business.Models.UpdateForms;
 using Data.Entities;
 
 namespace Business.Factories;

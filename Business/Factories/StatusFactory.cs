@@ -1,4 +1,5 @@
-﻿using Business.Models;
+﻿using Business.Models.RegForms;
+using Business.Models.UpdateForms;
 using Data.Entities;
 
 namespace Business.Factories;
@@ -11,6 +12,15 @@ public static class StatusFactory
     {
         return new StatusEntity
         {
+            Status = form.Status,
+        };
+    }
+
+    public static StatusEntity Update(StatusEntity entity, StatusUpdateForm form)
+    {
+        return new StatusEntity
+        {
+            Id = entity.Id,
             Status = form.Status,
         };
     }
