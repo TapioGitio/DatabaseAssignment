@@ -1,7 +1,7 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
-using Business.Models;
 using Business.Models.RegForms;
+using Business.Models.SafeToDisplay;
 using Business.Models.UpdateForms;
 using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +49,9 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         var entity = await _projectRepository.ReadAsync(x => x.Id == id);
 
         if (entity == null)
+            return false;
+
+        if (form == null)
             return false;
 
         var updatedEntity = ProjectFactory.Update(entity, form);

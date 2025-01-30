@@ -1,5 +1,5 @@
-﻿using Business.Models;
-using Business.Models.RegForms;
+﻿using Business.Models.RegForms;
+using Business.Models.SafeToDisplay;
 using Business.Models.UpdateForms;
 using Data.Entities;
 

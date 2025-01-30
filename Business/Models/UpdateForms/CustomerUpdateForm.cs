@@ -4,6 +4,8 @@ namespace Business.Models.UpdateForms;
 
 public class CustomerUpdateForm
 {
+    [Column(TypeName = "nvarchar(50)")]
+
     public string FirstName { get; set; } = null!;
 
     [Column(TypeName = "nvarchar(50)")]
