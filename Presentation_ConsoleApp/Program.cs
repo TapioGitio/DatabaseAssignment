@@ -21,10 +21,12 @@ serviceCollection.AddScoped<ICustomerService, CustomerService>();
 serviceCollection.AddScoped<IStatusService, StatusService>();
 serviceCollection.AddScoped<IServiceService, ServiceService>();
 
-serviceCollection.AddSingleton<MenuDialog>();
+serviceCollection.AddScoped<MenuDialog>();
 
 
 var serviceProvider = serviceCollection.BuildServiceProvider();
 
 var menu = serviceProvider.GetRequiredService<MenuDialog>();
-menu.MenuChoice();
+await menu.MenuChoice();
+
+

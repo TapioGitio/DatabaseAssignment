@@ -12,7 +12,10 @@ public class ProjectRegistrationForm
     [Required]
     public DateTime StartDate { get; set; } = DateTime.Now;
     public DateTime EndDate { get; set; }
+    public string StatusId { get; set; } = null!;
+    public string ProjectManagerId { get; set; } = null!;
+    public string ServiceId { get; set; } = null!;
+    public string CustomerId { get; set; } = null!;
 
-    [Column(TypeName = "nvarchar(15)")]
-    public string Status { get; set; } = null!;
+
 }
