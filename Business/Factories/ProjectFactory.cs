@@ -42,6 +42,10 @@ public static class ProjectFactory
             Name = form.Name,
             StartDate = projectEntity.StartDate,
             EndDate = form.EndDate,
+            StatusId = form.StatusId,
+            ProjectManagerId = form.ProjectManagerId,
+            ServiceId = form.ServiceId,
+            CustomerId = form.CustomerId,
         };
     }
     public static ProjectDetailedView CreateMajor(ProjectEntity projectEntity)

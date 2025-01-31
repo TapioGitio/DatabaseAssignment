@@ -1,5 +1,6 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
+using Business.Models.UpdateForms;
 
 namespace Presentation_ConsoleApp.Dialogs
 {
@@ -18,15 +19,18 @@ namespace Presentation_ConsoleApp.Dialogs
                 Console.Clear();
 
                 Console.WriteLine("------ Hans Mattin-Lassei AB ------");
-                Console.WriteLine("1. Add a Project");
                 Console.WriteLine("");
-                Console.WriteLine("2. Show Projects");
+                Console.WriteLine("1. Add Information");
                 Console.WriteLine("");
-                Console.WriteLine("3. Show Project Details");
+                Console.WriteLine("2. Projects");
                 Console.WriteLine("");
-                Console.WriteLine("4. Update a Project");
+                Console.WriteLine("3. Project Details");
                 Console.WriteLine("");
-                Console.WriteLine("5. Delete a Project");
+                Console.WriteLine("4. Update Project");
+                Console.WriteLine("");
+                Console.WriteLine("5. Delete Project");
+                Console.WriteLine("");
+                Console.WriteLine("6. EXIT");
                 Console.WriteLine("");
                 Console.Write("Choose a option: ");
                 int.TryParse(Console.ReadLine(), out int choice);
@@ -35,7 +39,7 @@ namespace Presentation_ConsoleApp.Dialogs
                 switch (choice)
                 {
                     case 1:
-                        await AddProjectOption();
+                        await AddOption();
                         break;
                     case 2:
                         await ShowOption();
@@ -44,55 +48,68 @@ namespace Presentation_ConsoleApp.Dialogs
                         await ShowDetailedOption();
                         break;
                     case 4:
-                        updateOption();
+                        await UpdateOption();
                         break;
                     case 5:
-                        deleteOption();
+                        await DeleteOption();
+                        break;
+                    case 6:
+                        ExitOption();
+                        break;
+                    default:
+                        Console.WriteLine("Select a number between 1 and 6");
                         break;
                 }
 
                 Console.ReadKey();
             }
         }
-        public async Task AddProjectOption()
+
+        public async Task AddOption()
         {
 
             while (true)
             {
                 Console.Clear();
-                var projectRegistrationForm = ProjectFactory.Create();
 
-                Console.WriteLine("--- Project ---");
-                Console.Write("Enter ProjectName: ");
-                projectRegistrationForm.Name = Console.ReadLine()!;
-                Console.Write("Enter Start Date in yyyy-mm-dd: ");
-                projectRegistrationForm.StartDate = DateTime.Parse(Console.ReadLine()!);
-                Console.Write("Enter End Date in yyyy-mm-dd: ");
-                projectRegistrationForm.EndDate = DateTime.Parse(Console.ReadLine()!);
+                Console.WriteLine("--- What would you like to add? ---");
+                Console.WriteLine("");
+                Console.WriteLine("1. Project");
+                Console.WriteLine("");
+                Console.WriteLine("2. Customer");
+                Console.WriteLine("");
+                Console.WriteLine("3. Project Manager");
+                Console.WriteLine("");
+                Console.WriteLine("4. Service");
+                Console.WriteLine("");
+                Console.WriteLine("5. BACK");
+                Console.WriteLine("");
+                Console.Write("Option: ");
+                int.TryParse(Console.ReadLine(), out int choice);
 
-                projectRegistrationForm.StatusId = await GetStatusId();
-                projectRegistrationForm.ServiceId = await GetServiceId();
-                projectRegistrationForm.ProjectManagerId = await GetPMId();
-                projectRegistrationForm.CustomerId = await GetCustomerId();
-
-                Console.WriteLine(projectRegistrationForm.StatusId);
-                Console.WriteLine(projectRegistrationForm.ServiceId);
-                Console.WriteLine(projectRegistrationForm.ProjectManagerId);
-                Console.WriteLine(projectRegistrationForm.CustomerId);
-                Console.ReadLine();
-
-                var result = await _projectService.CreateProjectAsync(projectRegistrationForm);
-
-                if (result)
+                switch (choice)
                 {
-                    Console.WriteLine("Congratulations You Have Created History");
-                    Console.ReadKey();
-                    break;
+                    case 1:
+                        await AddProject();
+                        break;
+                    case 2:
+                        await AddCustomer();
+                        break;
+                    case 3:
+                        await AddProjectManager();
+                        break;
+                    case 4:
+                        await AddService();
+                        break;
+                    case 5:
+                        BackOption();
+                        return;
+                    default:
+                        Console.WriteLine("Enter a number between 1 and 5");
+                        break;
                 }
-                else
-                {
-                    Console.WriteLine("Fakkit something went wrong");
-                }
+
+                Console.ReadKey();
             }
         }
 
@@ -101,92 +118,164 @@ namespace Presentation_ConsoleApp.Dialogs
             Console.Clear();
             var project = await _projectService.ReadAllWithoutDetailsAsync();
 
-            foreach (var item in project)
-            {
-                Console.WriteLine($"\n{item.Id}, {item.Name},{item.StartDate}, {item.EndDate},{item.Status}");
-            }
 
+            //Got help with AI with the Any() here. It was never null so it never got to the else
+            //statement. And I could not figure it out.
+
+            if (project != null && project.Any())
+            {
+                foreach (var item in project)
+                {
+                    Console.WriteLine($"\nID: {item.Id}, " +
+                        $"\nProject: {item.Name} " +
+                        $"\nStarted: {item.StartDate} " +
+                        $"\nDue date: {item.EndDate}" +
+                        $"\nStatus: {item.Status}" +
+                         "\n-----------------");
+                }       
+            }
+            else
+            {
+                Console.WriteLine("No available projects found");
+            }
         }
 
         public async Task ShowDetailedOption()
         {
             Console.Clear();
-            await ShowOption();
-
-            Console.Write("\nChoose wich id, to show detailed version: ");
-            string? input = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out int id))
-            {
-                Console.WriteLine("Invalid number");
-                Console.ReadKey();
-                return;
-            }
             
+            var checkIfEmpty = await _projectService.ReadAllWithoutDetailsAsync();
 
-            var project = await _projectService.ReadOneDetailedAsync(id);
-
-            if (project == null)
+            if (checkIfEmpty.Any())
             {
-                Console.WriteLine("Project not found. Please enter a valid ID.");
-                Console.ReadKey();
-                return;
-            }
+                await ShowOption();
 
-            Console.WriteLine($"{project.Id}, {project.Name},{project.StartDate}, {project.EndDate}, {project.CustomerFirstName}," +
-                $"{project.CustomerLastName},{project.CustomerEmail},{project.ManagerFirstName},{project.ManagerLastName}");
-            
-            Console.ReadKey();
+                Console.Write("\nChoose a project by typing the ID: ");
+                string? input = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out int id))
+                {
+                    Console.WriteLine("Invalid number");
+                    return;
+                }
+
+
+                var project = await _projectService.ReadOneDetailedAsync(id);
+
+                if (project == null)
+                {
+                    Console.WriteLine("Project not found.");
+                    return;
+                }
+                Console.Clear();
+
+                Console.WriteLine($"\nID: {project.Id}" +
+                    $"\nProject: {project.Name}" +
+                    $"\nStarted: {project.StartDate}" +
+                    $"\nDue date: {project.EndDate}" +
+                    $"\n\nCustomer: " +
+                    $"{project.CustomerFirstName}" + " " +
+                    $"{project.CustomerLastName}" + " " +
+                    $"<{project.CustomerEmail}>" +
+                    $"\nProject Manager: {project.ManagerFirstName}" + " " +
+                    $"{project.ManagerLastName}" + " " +
+                    $"<{project.ManagerPhoneNumber}>" +
+                    $"\nService: {project.ServiceName}" + " " + $"{project.Price}" + " " + "SEK/tim");
+            }
+            else
+            {
+                Console.WriteLine("No projects found, make a new one and return.");
+            }
         }
 
-        public void updateOption()
+        public async Task UpdateOption()
         {
-            //Console.Clear();
-            //showOption();
-            //Console.WriteLine();
-            //Console.Write("Välj id:t på den du vill uppdatera: ");
-            //int.TryParse(Console.ReadLine(), out int option);
+   
+            while (true)
+            {
+                await ShowOption();
+                Console.Write("\nChoose what project you'd like to update: ");
 
-            //var newProject = _projectService.(option);
+                int.TryParse(Console.ReadLine(), out int option);
+                await _projectService.ReadOneDetailedAsync(option);
 
-            //Console.WriteLine("Enter Firstname");
-            //newCustomer.FirstName = Console.ReadLine()!;
-
-
-            //Console.WriteLine("Enter Lastname");
-            //newCustomer.LastName = Console.ReadLine()!;
-
-            //Console.WriteLine("Enter Email");
-            //newCustomer.Email = Console.ReadLine()!;
-
-            //Console.WriteLine("Enter Phonenr");
-            //newCustomer.PhoneNumber = Console.ReadLine()!;
+                var update = new ProjectUpdateForm();
 
 
-            //_customer.UpdateCustomer(newCustomer);
-            //showOption();
+                Console.WriteLine("--- Project ---");
+                Console.Write("\nEnter ProjectName: ");
+                update.Name = Console.ReadLine()!;
+                Console.Write("Enter Start Date in yyyy-mm-dd: ");
+                update.StartDate = DateTime.Parse(Console.ReadLine()!);
+                Console.Write("Enter End Date in yyyy-mm-dd: ");
+                update.EndDate = DateTime.Parse(Console.ReadLine()!);
+
+                update.StatusId = await GetStatusId();
+                update.ServiceId = await GetServiceId();
+                update.ProjectManagerId = await GetPMId();
+                update.CustomerId = await GetCustomerId();
+
+                var result = await _projectService.UpdateProjectAsync(option, update);
+
+                if (result)
+                {
+                    Console.WriteLine("\nProject has been updated!");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("\nProject update was terminated, try again");
+                }
+            }
         }
 
-        public void deleteOption()
+        public async Task DeleteOption()
         {
-            //Console.Clear();
-            //Console.WriteLine();
-            //showOption();
+            Console.Clear();
 
-            //Console.Write("Skriv id:t på den du vill radera: ");
-            //int.TryParse(Console.ReadLine(), out int option);
+            var checkIfEmpty = await _projectService.ReadAllWithoutDetailsAsync();
 
-            //_customer.DeleteCustomer(option);
+            if (checkIfEmpty.Any())
+            {
+                await ShowOption();
+
+                Console.Write("Pick a project Id in order to delete it: ");
+                int.TryParse(Console.ReadLine(), out int option);
+
+                var result = await _projectService.DeleteProjectAsync(option);
+
+                if (result)
+                    Console.WriteLine($"\nProject with Id: {option}, was succesfully deleted.");
+                else
+                    Console.WriteLine("\nAn error occured, come back later");
+            }
+            else
+            {
+                Console.WriteLine("No projects available to delete");
+            }
+        }
+
+        public void ExitOption()
+        {
+            Environment.Exit(0);
+        }
+
+        public void BackOption()
+        {
+            Console.Clear();
+            Console.WriteLine("Press any key to return to Main Menu.");
         }
 
         //GET and set Methods to be able to set Ids when creating projects
         public async Task<int> GetCustomerId()
         {
+            Console.Clear();
+
             var customers = await _customerService.ReadCustomersAsync();
             Console.Write("Select CustomerID: ");
             foreach (var customer in customers)
             {
-                Console.WriteLine($"ID {customer.Id}: {customer.FirstName} {customer.LastName}");
+                Console.WriteLine($"\nID {customer.Id}: {customer.FirstName} {customer.LastName}");
             }
             int customerId;
 
@@ -199,11 +288,13 @@ namespace Presentation_ConsoleApp.Dialogs
         }
         public async Task<int> GetStatusId()
         {
+            Console.Clear();
+
             var status = await _statusService.ReadStatusAsync();
             Console.Write("Select StatusID: ");
             foreach (var sta in status)
             {
-                Console.WriteLine($"ID {sta.Id}: {sta.StatusName}");
+                Console.WriteLine($"\nID {sta.Id}: {sta.StatusName}");
             }
             int statusId;
 
@@ -216,11 +307,13 @@ namespace Presentation_ConsoleApp.Dialogs
         }
         public async Task<int> GetPMId()
         {
+            Console.Clear();
+
             var pm = await _projectManagerService.ReadPMAsync();
             Console.Write("Select ManagerID: ");
             foreach (var manager in pm)
             {
-                Console.WriteLine($"ID {manager.Id}: {manager.FirstName} {manager.LastName}");
+                Console.WriteLine($"\nID {manager.Id}: {manager.FirstName} {manager.LastName}");
             }
             int PMId;
 
@@ -233,11 +326,13 @@ namespace Presentation_ConsoleApp.Dialogs
         }
         public async Task<int> GetServiceId()
         {
+            Console.Clear();
+
             var service = await _serviceService.ReadServicesAsync();
             Console.Write("Select ServiceId: ");
             foreach (var serv in service)
             {
-                Console.WriteLine($"ID {serv.Id}: {serv.ServiceName}");
+                Console.WriteLine($"\nID {serv.Id}: {serv.ServiceName}");
             }
             int serviceId;
 
@@ -252,6 +347,41 @@ namespace Presentation_ConsoleApp.Dialogs
         //END of get n set methods
 
         //START of Add methods, in case i want to be able to create new entities.
+
+        public async Task AddProject()
+        {
+
+            while (true)
+            {
+                Console.Clear();
+                var projectRegistrationForm = ProjectFactory.Create();
+
+                Console.WriteLine("--- Project ---");
+                Console.Write("\nEnter ProjectName: ");
+                projectRegistrationForm.Name = Console.ReadLine()!;
+                Console.Write("Enter Start Date in yyyy-mm-dd: ");
+                projectRegistrationForm.StartDate = DateTime.Parse(Console.ReadLine()!);
+                Console.Write("Enter End Date in yyyy-mm-dd: ");
+                projectRegistrationForm.EndDate = DateTime.Parse(Console.ReadLine()!);
+
+                projectRegistrationForm.StatusId = await GetStatusId();
+                projectRegistrationForm.ServiceId = await GetServiceId();
+                projectRegistrationForm.ProjectManagerId = await GetPMId();
+                projectRegistrationForm.CustomerId = await GetCustomerId();
+
+                var result = await _projectService.CreateProjectAsync(projectRegistrationForm);
+
+                if (result)
+                {
+                    Console.WriteLine("\nProject was created!");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("\nNo project was created, try again");
+                }
+            }
+        }
         public async Task AddCustomer()
         {
             Console.Clear();
@@ -259,17 +389,20 @@ namespace Presentation_ConsoleApp.Dialogs
             var cform = CustomerFactory.Create();
 
             Console.WriteLine("--- Customer ---");
-            Console.WriteLine("Enter first name");
+            Console.Write("Enter first name: ");
             cform.FirstName = Console.ReadLine()!;
-            Console.WriteLine("Enter last name");
+            Console.Write("Enter last name: ");
             cform.LastName = Console.ReadLine()!;
-            Console.WriteLine("Enter email");
+            Console.Write("Enter email: ");
             cform.Email = Console.ReadLine()!;
             var custom = await _customerService.CreateCustomerAsync(cform);
             if (custom)
             {
-                Console.WriteLine("Customer Added");
-                Console.ReadLine();
+                Console.WriteLine("\nCustomer Added");
+            }
+            else
+            {
+                Console.WriteLine("\nCustomer not Added");
             }
         }
         public async Task AddProjectManager()
@@ -279,18 +412,21 @@ namespace Presentation_ConsoleApp.Dialogs
             var pmform = ProjectManagerFactory.Create();
 
             Console.WriteLine("--- Project Manager ---");
-            Console.WriteLine("Enter first name");
+            Console.Write("Enter first name: ");
             pmform.FirstName = Console.ReadLine()!;
-            Console.WriteLine("Enter last name");
+            Console.Write("Enter last name: ");
             pmform.LastName = Console.ReadLine()!;
-            Console.WriteLine("Enter Phone number");
+            Console.Write("Enter Phone number: ");
             pmform.PhoneNumber = Console.ReadLine()!;
             var pm = await _projectManagerService.CreatePMAsync(pmform);
 
             if (pm)
             {
-                Console.WriteLine("Manager Added");
-                Console.ReadLine();
+                Console.WriteLine("\nManager Added");
+            }
+            else
+            {
+                Console.WriteLine("\nManager not Added");
             }
         }
 
@@ -301,17 +437,19 @@ namespace Presentation_ConsoleApp.Dialogs
             var sform = ServiceFactory.Create();
 
             Console.WriteLine("--- Service ---");
-            Console.WriteLine("Enter the service");
+            Console.Write("Enter the service: ");
             sform.ServiceName = Console.ReadLine()!;
-            Console.WriteLine("Enter the price in numbers!!");
+            Console.Write("Enter the price: ");
             sform.Price = int.Parse(Console.ReadLine()!);
-            Console.WriteLine("Enter Phone number");
             var service = await _serviceService.CreateServiceAsync(sform);
 
             if (service)
             {
-                Console.WriteLine("Service Added");
-                Console.ReadLine();
+                Console.WriteLine("\nService Added");
+            }
+            else
+            {
+                Console.WriteLine("\nService not Added");
             }
         }
 
@@ -322,14 +460,17 @@ namespace Presentation_ConsoleApp.Dialogs
             var statusform = StatusFactory.Create();
 
             Console.WriteLine("--- Status ---");
-            Console.WriteLine("Enter Status");
+            Console.Write("Enter Status: ");
             statusform.Status = Console.ReadLine()!;
             var status = await _statusService.CreateStatusAsync(statusform);
 
             if (status)
             {
-                Console.WriteLine("Status Added");
-                Console.ReadLine();
+                Console.WriteLine("\nStatus Added");
+            }
+            else
+            {
+                Console.WriteLine("\nStatus not Added");
             }
         }
 
