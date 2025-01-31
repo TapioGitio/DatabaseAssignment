@@ -89,7 +89,6 @@ namespace Presentation_ConsoleApp.Dialogs
                         Console.WriteLine("Enter a number between 1 and 5");
                         break;
                 }
-
                 Console.ReadKey();
             }
         }
