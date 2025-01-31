@@ -5,6 +5,7 @@ namespace Business.Models.RegForms;
 
 public class ProjectRegistrationForm
 {
+    [Required]
 
     [Column(TypeName = "nvarchar(50)")]
     public string Name { get; set; } = null!;
@@ -12,10 +13,10 @@ public class ProjectRegistrationForm
     [Required]
     public DateTime StartDate { get; set; } = DateTime.Now;
     public DateTime EndDate { get; set; }
-    public string StatusId { get; set; } = null!;
-    public string ProjectManagerId { get; set; } = null!;
-    public string ServiceId { get; set; } = null!;
-    public string CustomerId { get; set; } = null!;
+    public int StatusId { get; set; }
+    public int ProjectManagerId { get; set; }
+    public int ServiceId { get; set; } 
+    public int CustomerId { get; set; } 
 
 
 }
