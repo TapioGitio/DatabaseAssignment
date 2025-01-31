@@ -115,9 +115,7 @@ namespace Presentation_ConsoleApp.Dialogs
                 }       
             }
             else
-            {
                 Console.WriteLine("No available projects found");
-            }
         }
 
         public async Task ShowDetailedOption()
@@ -161,9 +159,7 @@ namespace Presentation_ConsoleApp.Dialogs
                     $"\nService: {project.ServiceName}" + " " + $"{project.Price}" + " " + "SEK/tim");
             }
             else
-            {
                 Console.WriteLine("No projects found, make a new one and return.");
-            }
         }
 
         public async Task UpdateOption()
@@ -200,25 +196,18 @@ namespace Presentation_ConsoleApp.Dialogs
                     var result = await _projectService.UpdateProjectAsync(option, update);
 
                     if (result)
-                    {
                         Console.WriteLine("\nProject has been updated!");
-                    }
                     else
-                    {
                         Console.WriteLine("\nProject update was terminated, try again");
-                    }
                 }
                 else
-                {
                     Console.WriteLine("\nCould not find the project you entered");
-                }
             }
         }
 
         public async Task DeleteOption()
         {
             Console.Clear();
-
             var projects = await _projectService.ReadAllWithoutDetailsAsync();
 
             if (projects.Any())
@@ -235,10 +224,9 @@ namespace Presentation_ConsoleApp.Dialogs
                 else
                     Console.WriteLine("\nAn error occured, come back later");
             }
+
             else
-            {
                 Console.WriteLine("No projects available to delete");
-            }
         }
 
         public void ExitOption()
@@ -337,41 +325,36 @@ namespace Presentation_ConsoleApp.Dialogs
         public async Task AddProject()
         {
 
-            while (true)
-            {
-                Console.Clear();
-                var projectRegistrationForm = ProjectFactory.Create();
+            Console.Clear();
+            var projectRegistrationForm = ProjectFactory.Create();
 
-                Console.WriteLine("--- Project ---");
-                Console.Write("\nEnter ProjectName: ");
-                projectRegistrationForm.Name = Console.ReadLine()!;
-                Console.Write("Enter Start Date in yyyy-mm-dd: ");
-                projectRegistrationForm.StartDate = DateTime.Parse(Console.ReadLine()!);
-                Console.Write("Enter End Date in yyyy-mm-dd: ");
-                projectRegistrationForm.EndDate = DateTime.Parse(Console.ReadLine()!);
+            Console.WriteLine("--- Project ---");
+            Console.Write("\nEnter ProjectName: ");
+            projectRegistrationForm.Name = Console.ReadLine()!;
 
-                projectRegistrationForm.StatusId = await GetStatusId();
-                projectRegistrationForm.ServiceId = await GetServiceId();
-                projectRegistrationForm.ProjectManagerId = await GetPMId();
-                projectRegistrationForm.CustomerId = await GetCustomerId();
+            Console.Write("Enter Start Date in yyyy-mm-dd: ");
+            projectRegistrationForm.StartDate = DateTime.Parse(Console.ReadLine()!);
 
-                var result = await _projectService.CreateProjectAsync(projectRegistrationForm);
+            Console.Write("Enter End Date in yyyy-mm-dd: ");
+            projectRegistrationForm.EndDate = DateTime.Parse(Console.ReadLine()!);
 
-                if (result)
-                {
-                    Console.WriteLine("\nProject was created!");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("\nNo project was created, try again");
-                }
-            }
+            projectRegistrationForm.StatusId = await GetStatusId();
+            projectRegistrationForm.ServiceId = await GetServiceId();
+            projectRegistrationForm.ProjectManagerId = await GetPMId();
+            projectRegistrationForm.CustomerId = await GetCustomerId();
+
+            var result = await _projectService.CreateProjectAsync(projectRegistrationForm);
+
+            if (result)
+                Console.WriteLine("\nProject was created!");
+
+            else
+                Console.WriteLine("\nNo project was created, try again");
+            
         }
         public async Task AddCustomer()
         {
             Console.Clear();
-
             var cform = CustomerFactory.Create();
 
             Console.WriteLine("--- Customer ---");
@@ -382,19 +365,15 @@ namespace Presentation_ConsoleApp.Dialogs
             Console.Write("Enter email: ");
             cform.Email = Console.ReadLine()!;
             var custom = await _customerService.CreateCustomerAsync(cform);
+
             if (custom)
-            {
                 Console.WriteLine("\nCustomer Added");
-            }
             else
-            {
                 Console.WriteLine("\nCustomer not Added");
-            }
         }
         public async Task AddProjectManager()
         {
             Console.Clear();
-
             var pmform = ProjectManagerFactory.Create();
 
             Console.WriteLine("--- Project Manager ---");
@@ -407,19 +386,14 @@ namespace Presentation_ConsoleApp.Dialogs
             var pm = await _projectManagerService.CreatePMAsync(pmform);
 
             if (pm)
-            {
                 Console.WriteLine("\nManager Added");
-            }
             else
-            {
                 Console.WriteLine("\nManager not Added");
-            }
         }
 
         public async Task AddService()
         {
             Console.Clear();
-
             var sform = ServiceFactory.Create();
 
             Console.WriteLine("--- Service ---");
@@ -430,19 +404,14 @@ namespace Presentation_ConsoleApp.Dialogs
             var service = await _serviceService.CreateServiceAsync(sform);
 
             if (service)
-            {
                 Console.WriteLine("\nService Added");
-            }
             else
-            {
                 Console.WriteLine("\nService not Added");
-            }
         }
 
         public async Task AddStatus()
         {
             Console.Clear();
-
             var statusform = StatusFactory.Create();
 
             Console.WriteLine("--- Status ---");
@@ -451,17 +420,11 @@ namespace Presentation_ConsoleApp.Dialogs
             var status = await _statusService.CreateStatusAsync(statusform);
 
             if (status)
-            {
                 Console.WriteLine("\nStatus Added");
-            }
             else
-            {
                 Console.WriteLine("\nStatus not Added");
-            }
         }
-
         //END of Add methods
     }
-
 }
 
