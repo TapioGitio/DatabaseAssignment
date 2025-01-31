@@ -142,7 +142,7 @@ namespace Presentation_ConsoleApp.Dialogs
 
                 if (project == null)
                 {
-                    Console.WriteLine("Project not found.");
+                    Console.WriteLine("\nProject not found.");
                     return;
                 }
 
