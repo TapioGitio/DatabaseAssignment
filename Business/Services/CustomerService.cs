@@ -1,6 +1,7 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
 using Business.Models.RegForms;
+using Business.Models.SafeToDisplay;
 using Business.Models.UpdateForms;
 using Data.Interfaces;
 
@@ -20,6 +21,14 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
         return await _customerRepository.CreateAsync(entity);
     }
 
+    public async Task<IEnumerable<Customer>> ReadCustomersAsync()
+    {
+        var entities = await _customerRepository.ReadAllAsync();
+
+        var converted = entities.Select(CustomerFactory.Create);
+
+        return converted;
+    }
 
     public async Task<bool> UpdateCustomerAsync(int id, CustomerUpdateForm form)
     {

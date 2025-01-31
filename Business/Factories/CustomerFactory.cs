@@ -1,4 +1,5 @@
 ﻿using Business.Models.RegForms;
+using Business.Models.SafeToDisplay;
 using Business.Models.UpdateForms;
 using Data.Entities;
 
@@ -15,6 +16,16 @@ public static class CustomerFactory
             FirstName = form.FirstName,
             LastName = form.LastName,
             Email = form.Email,
+        };
+    }
+
+    public static Customer Create(CustomerEntity entity)
+    {
+        return new Customer
+        {
+            Id = entity.Id,
+            FirstName = entity.FirstName,
+            LastName = entity.LastName,
         };
     }
 

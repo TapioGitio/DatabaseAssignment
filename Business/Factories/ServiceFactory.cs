@@ -1,4 +1,5 @@
 ﻿using Business.Models.RegForms;
+using Business.Models.SafeToDisplay;
 using Business.Models.UpdateForms;
 using Data.Entities;
 
@@ -14,6 +15,16 @@ public static class ServiceFactory
         {
             ServiceName = form.ServiceName,
             Price = form.Price,
+        };
+    }
+
+    public static Service Create(ServiceEntity entity)
+    {
+        return new Service
+        {
+            Id = entity.Id,
+            ServiceName = entity.ServiceName,
+            Price = entity.Price,
         };
     }
 

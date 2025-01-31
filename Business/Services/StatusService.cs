@@ -1,6 +1,7 @@
 ﻿using Business.Factories;
 using Business.Interfaces;
 using Business.Models.RegForms;
+using Business.Models.SafeToDisplay;
 using Business.Models.UpdateForms;
 using Data.Interfaces;
 
@@ -19,6 +20,14 @@ public class StatusService(IStatusRepository statusRepository) : IStatusService
         return await _statusRepository.CreateAsync(entity);
     }
 
+    public async Task<IEnumerable<Status>> ReadStatusAsync()
+    {
+        var entities = await _statusRepository.ReadAllAsync();
+
+        var converted = entities.Select(StatusFactory.Create);
+
+        return converted;
+    }
 
     public async Task<bool> UpdateStatusAsync(int id, StatusUpdateForm form)
     {
@@ -43,4 +52,6 @@ public class StatusService(IStatusRepository statusRepository) : IStatusService
 
         return await _statusRepository.DeleteAsync(x => x.Id == id);
     }
+
+
 }

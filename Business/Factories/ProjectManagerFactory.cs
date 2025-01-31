@@ -1,4 +1,5 @@
 ﻿using Business.Models.RegForms;
+using Business.Models.SafeToDisplay;
 using Business.Models.UpdateForms;
 using Data.Entities;
 
@@ -15,6 +16,16 @@ public static class ProjectManagerFactory
             FirstName = form.FirstName,
             LastName = form.LastName,
             PhoneNumber = form.PhoneNumber,
+        };
+    }
+
+    public static ProjectManager Create(ProjectManagerEntity entity)
+    {
+        return new ProjectManager
+        {
+            Id = entity.Id,
+            FirstName = entity.FirstName,
+            LastName = entity.LastName,
         };
     }
 

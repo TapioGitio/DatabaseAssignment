@@ -1,4 +1,5 @@
 ﻿using Business.Models.RegForms;
+using Business.Models.SafeToDisplay;
 using Business.Models.UpdateForms;
 using Data.Entities;
 
@@ -13,6 +14,15 @@ public static class StatusFactory
         return new StatusEntity
         {
             Status = form.Status,
+        };
+    }
+
+    public static Status Create(StatusEntity entity)
+    {
+        return new Status
+        {
+            Id = entity.Id,
+            StatusName = entity.Status
         };
     }
 
