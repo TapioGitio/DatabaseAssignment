@@ -63,9 +63,11 @@ namespace Presentation_ConsoleApp.Dialogs
                 var projectRegistrationForm = ProjectFactory.Create();
 
                 Console.WriteLine("--- Project ---");
-                Console.WriteLine("Enter ProjectName");
+                Console.Write("Enter ProjectName: ");
                 projectRegistrationForm.Name = Console.ReadLine()!;
-                Console.WriteLine("Enter End Date in yyyy-mm-dd");
+                Console.Write("Enter Start Date in yyyy-mm-dd: ");
+                projectRegistrationForm.StartDate = DateTime.Parse(Console.ReadLine()!);
+                Console.Write("Enter End Date in yyyy-mm-dd: ");
                 projectRegistrationForm.EndDate = DateTime.Parse(Console.ReadLine()!);
 
                 projectRegistrationForm.StatusId = await GetStatusId();

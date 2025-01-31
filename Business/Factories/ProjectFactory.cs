@@ -16,6 +16,10 @@ public static class ProjectFactory
             Name = projectRegistrationForm.Name,
             StartDate = projectRegistrationForm.StartDate,
             EndDate = projectRegistrationForm.EndDate,
+            StatusId = projectRegistrationForm.StatusId,
+            ProjectManagerId = projectRegistrationForm.ProjectManagerId,
+            ServiceId = projectRegistrationForm.ServiceId,
+            CustomerId = projectRegistrationForm.CustomerId,
         };
     }
 

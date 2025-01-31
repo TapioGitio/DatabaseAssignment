@@ -14,7 +14,7 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     public virtual async Task<bool> CreateAsync(TEntity entity)
     {
         if (entity == null)
-            return false!;
+            return false;
 
         try
         {
@@ -26,7 +26,7 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         catch (Exception ex)
         {
             Debug.WriteLine($"Failure creating this entity: {nameof(TEntity)}, {ex.Message}");
-            return false!;
+            return false;
         }
     }
 
@@ -54,7 +54,7 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     public virtual async Task<bool> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity newEntity)
     {
         if (newEntity == null)
-            return false!;
+            return false;
 
         try
         {
@@ -62,7 +62,7 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
                 ?? null!;
 
             if (oldEntity == null)
-                return false!;
+                return false;
 
             _context.Entry(oldEntity).CurrentValues.SetValues(newEntity);
             await _context.SaveChangesAsync();
@@ -73,7 +73,7 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         catch (Exception ex)
         {
             Debug.WriteLine($"Failure updating this entity: {nameof(TEntity)}, {ex.Message}");
-            return false!;
+            return false;
         }
     }
 
@@ -96,7 +96,7 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         catch (Exception ex)
         {
             Debug.WriteLine($"Failure deleting this entity: {nameof(TEntity)}, {ex.Message}");
-            return false!;
+            return false;
         }
     }
 

@@ -10,8 +10,7 @@ public class ProjectRegistrationForm
     [Column(TypeName = "nvarchar(50)")]
     public string Name { get; set; } = null!;
 
-    [Required]
-    public DateTime StartDate { get; set; } = DateTime.Now;
+    public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public int StatusId { get; set; }
     public int ProjectManagerId { get; set; }
