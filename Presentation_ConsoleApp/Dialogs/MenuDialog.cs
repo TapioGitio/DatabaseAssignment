@@ -17,25 +17,15 @@ namespace Presentation_ConsoleApp.Dialogs
             while (true)
             {
                 Console.Clear();
-
                 Console.WriteLine("------ Hans Mattin-Lassei AB ------");
-                Console.WriteLine("");
-                Console.WriteLine("1. Add Information");
-                Console.WriteLine("");
-                Console.WriteLine("2. Projects");
-                Console.WriteLine("");
-                Console.WriteLine("3. Project Details");
-                Console.WriteLine("");
-                Console.WriteLine("4. Update Project");
-                Console.WriteLine("");
-                Console.WriteLine("5. Delete Project");
-                Console.WriteLine("");
-                Console.WriteLine("6. EXIT");
-                Console.WriteLine("");
-                Console.Write("Choose a option: ");
+                Console.WriteLine("\n1. Add Information");
+                Console.WriteLine("\n2. Projects");
+                Console.WriteLine("\n3. Project Details");
+                Console.WriteLine("\n4. Update Project");
+                Console.WriteLine("\n5. Delete Project");
+                Console.WriteLine("\n6. EXIT");
+                Console.Write("\nChoose a option: ");
                 int.TryParse(Console.ReadLine(), out int choice);
-
-
                 switch (choice)
                 {
                     case 1:
@@ -60,31 +50,22 @@ namespace Presentation_ConsoleApp.Dialogs
                         Console.WriteLine("Select a number between 1 and 6");
                         break;
                 }
-
                 Console.ReadKey();
             }
         }
 
         public async Task AddOption()
         {
-
             while (true)
             {
                 Console.Clear();
-
                 Console.WriteLine("--- What would you like to add? ---");
-                Console.WriteLine("");
-                Console.WriteLine("1. Project");
-                Console.WriteLine("");
-                Console.WriteLine("2. Customer");
-                Console.WriteLine("");
-                Console.WriteLine("3. Project Manager");
-                Console.WriteLine("");
-                Console.WriteLine("4. Service");
-                Console.WriteLine("");
-                Console.WriteLine("5. BACK");
-                Console.WriteLine("");
-                Console.Write("Option: ");
+                Console.WriteLine("\n1. Project");
+                Console.WriteLine("\n2. Customer");
+                Console.WriteLine("\n3. Project Manager");
+                Console.WriteLine("\n4. Service");
+                Console.WriteLine("\n5. BACK");
+                Console.Write("\nOption: ");
                 int.TryParse(Console.ReadLine(), out int choice);
 
                 switch (choice)
@@ -116,15 +97,14 @@ namespace Presentation_ConsoleApp.Dialogs
         public async Task ShowOption()
         {
             Console.Clear();
-            var project = await _projectService.ReadAllWithoutDetailsAsync();
-
+            var projects = await _projectService.ReadAllWithoutDetailsAsync();
 
             //Got help with AI with the Any() here. It was never null so it never got to the else
             //statement. And I could not figure it out.
 
-            if (project != null && project.Any())
+            if (projects.Any())
             {
-                foreach (var item in project)
+                foreach (var item in projects)
                 {
                     Console.WriteLine($"\nID: {item.Id}, " +
                         $"\nProject: {item.Name} " +
@@ -143,10 +123,9 @@ namespace Presentation_ConsoleApp.Dialogs
         public async Task ShowDetailedOption()
         {
             Console.Clear();
-            
-            var checkIfEmpty = await _projectService.ReadAllWithoutDetailsAsync();
+            var projects = await _projectService.ReadAllWithoutDetailsAsync();
 
-            if (checkIfEmpty.Any())
+            if (projects.Any())
             {
                 await ShowOption();
 
@@ -159,7 +138,6 @@ namespace Presentation_ConsoleApp.Dialogs
                     return;
                 }
 
-
                 var project = await _projectService.ReadOneDetailedAsync(id);
 
                 if (project == null)
@@ -167,8 +145,8 @@ namespace Presentation_ConsoleApp.Dialogs
                     Console.WriteLine("Project not found.");
                     return;
                 }
-                Console.Clear();
 
+                Console.Clear();
                 Console.WriteLine($"\nID: {project.Id}" +
                     $"\nProject: {project.Name}" +
                     $"\nStarted: {project.StartDate}" +
@@ -190,41 +168,49 @@ namespace Presentation_ConsoleApp.Dialogs
 
         public async Task UpdateOption()
         {
-   
-            while (true)
+            var projects = await _projectService.ReadAllWithoutDetailsAsync();
+
+            if (projects.Any())
             {
+
                 await ShowOption();
                 Console.Write("\nChoose what project you'd like to update: ");
 
                 int.TryParse(Console.ReadLine(), out int option);
-                await _projectService.ReadOneDetailedAsync(option);
+                var proceed = await _projectService.ReadOneDetailedAsync(option);
 
-                var update = new ProjectUpdateForm();
-
-
-                Console.WriteLine("--- Project ---");
-                Console.Write("\nEnter ProjectName: ");
-                update.Name = Console.ReadLine()!;
-                Console.Write("Enter Start Date in yyyy-mm-dd: ");
-                update.StartDate = DateTime.Parse(Console.ReadLine()!);
-                Console.Write("Enter End Date in yyyy-mm-dd: ");
-                update.EndDate = DateTime.Parse(Console.ReadLine()!);
-
-                update.StatusId = await GetStatusId();
-                update.ServiceId = await GetServiceId();
-                update.ProjectManagerId = await GetPMId();
-                update.CustomerId = await GetCustomerId();
-
-                var result = await _projectService.UpdateProjectAsync(option, update);
-
-                if (result)
+                if (proceed != null)
                 {
-                    Console.WriteLine("\nProject has been updated!");
-                    break;
+                    Console.Clear();
+                    var update = new ProjectUpdateForm();
+
+                    Console.WriteLine("--- Project ---");
+                    Console.Write("\nEnter ProjectName: ");
+                    update.Name = Console.ReadLine()!;
+                    Console.Write("Enter Start Date in yyyy-mm-dd: ");
+                    update.StartDate = DateTime.Parse(Console.ReadLine()!);
+                    Console.Write("Enter End Date in yyyy-mm-dd: ");
+                    update.EndDate = DateTime.Parse(Console.ReadLine()!);
+
+                    update.StatusId = await GetStatusId();
+                    update.ServiceId = await GetServiceId();
+                    update.ProjectManagerId = await GetPMId();
+                    update.CustomerId = await GetCustomerId();
+
+                    var result = await _projectService.UpdateProjectAsync(option, update);
+
+                    if (result)
+                    {
+                        Console.WriteLine("\nProject has been updated!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nProject update was terminated, try again");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("\nProject update was terminated, try again");
+                    Console.WriteLine("\nCould not find the project you entered");
                 }
             }
         }
@@ -233,9 +219,9 @@ namespace Presentation_ConsoleApp.Dialogs
         {
             Console.Clear();
 
-            var checkIfEmpty = await _projectService.ReadAllWithoutDetailsAsync();
+            var projects = await _projectService.ReadAllWithoutDetailsAsync();
 
-            if (checkIfEmpty.Any())
+            if (projects.Any())
             {
                 await ShowOption();
 
