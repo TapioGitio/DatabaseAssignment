@@ -13,7 +13,7 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
 
     public async Task<bool> CreateCustomerAsync(CustomerRegistrationForm form)
     {
-        if (form == null)
+        if (form == null || string.IsNullOrWhiteSpace(form.FirstName) || string.IsNullOrWhiteSpace(form.LastName) || string.IsNullOrWhiteSpace(form.Email))
             return false;
 
         var entity = CustomerFactory.Create(form);

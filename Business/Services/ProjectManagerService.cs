@@ -13,7 +13,7 @@ public class ProjectManagerService(IProjectManagerRepository projectManagerRepos
 
     public async Task<bool> CreatePMAsync(ProjectManagerRegistrationForm form)
     {
-        if (form == null)
+        if (form == null || string.IsNullOrWhiteSpace(form.FirstName) || string.IsNullOrWhiteSpace(form.LastName) || string.IsNullOrWhiteSpace(form.PhoneNumber)) 
             return false;
 
         var entity = ProjectManagerFactory.Create(form);

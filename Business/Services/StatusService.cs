@@ -13,7 +13,7 @@ public class StatusService(IStatusRepository statusRepository) : IStatusService
 
     public async Task<bool> CreateStatusAsync(StatusRegistrationForm form)
     {
-        if (form == null)
+        if (form == null || string.IsNullOrWhiteSpace(form.Status))
             return false;
         var entity = StatusFactory.Create(form);
 

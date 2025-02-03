@@ -14,7 +14,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
 
     public async Task<bool> CreateProjectAsync(ProjectRegistrationForm form)
     {
-        if (form == null)
+        if (form == null || string.IsNullOrWhiteSpace(form.Name))
             return false;
 
         var entity = ProjectFactory.Create(form);

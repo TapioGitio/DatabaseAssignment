@@ -4,6 +4,7 @@ using Data.Context;
 using Data.Interfaces;
 using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation_ConsoleApp.Dialogs;
 
@@ -14,6 +15,7 @@ serviceCollection.AddScoped<IProjectManagerRepository, ProjectManagerRepository>
 serviceCollection.AddScoped<ICustomerRepository, CustomerRepository>();
 serviceCollection.AddScoped<IStatusRepository, StatusRepository>();
 serviceCollection.AddScoped<IServiceRepository, ServiceRepository>();
+serviceCollection.AddMemoryCache();
 
 serviceCollection.AddScoped<IProjectService, ProjectService>();
 serviceCollection.AddScoped<IProjectManagerService, ProjectManagerService>();

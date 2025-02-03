@@ -2,10 +2,11 @@
 using Data.Entities;
 using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Data.Repositories;
 
-public class ProjectRepository(DataContext context) : BaseRepository<ProjectEntity>(context), IProjectRepository
+public class ProjectRepository(DataContext context, IMemoryCache cache) : BaseRepository<ProjectEntity>(context, cache), IProjectRepository
 {
     
     public async Task<ProjectEntity?> ReadDetailedAsync(int projectId)

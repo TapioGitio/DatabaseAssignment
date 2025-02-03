@@ -1,15 +1,20 @@
 ﻿using Data.Context;
 using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace Data.Repositories;
 
-public abstract class BaseRepository<TEntity>(DataContext context) : IBaseRepository<TEntity> where TEntity : class
+public abstract class BaseRepository<TEntity>(DataContext context, IMemoryCache cache) : IBaseRepository<TEntity> where TEntity : class
 {
     protected readonly DataContext _context = context;
     protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
+    protected readonly IMemoryCache _cache = cache;
+
+    protected string GetCacheKey(string methodName, object? key = null) =>
+        $"{nameof(TEntity)}_{methodName}_{key ?? "all"}";
 
     public virtual async Task<bool> CreateAsync(TEntity entity)
     {
@@ -34,10 +39,20 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     {
         IQueryable<TEntity> query = _dbSet;
 
+        var cacheKey = GetCacheKey(nameof(ReadAllAsync));
+        if (_cache.TryGetValue(cacheKey, out IEnumerable<TEntity>? cachedEntities))
+        {
+            return cachedEntities!;
+        }
+
+
         if (includeExpression != null)
             query = includeExpression(query);
 
-        return await query.ToListAsync();
+        var result = await query.ToListAsync();
+        _cache.Set(cacheKey, result, TimeSpan.FromMinutes(4));
+
+        return result;
     }
 
 
@@ -45,11 +60,20 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     {
         IQueryable<TEntity> query = _dbSet;
 
+        var cacheKey = GetCacheKey(nameof(ReadAsync), expression.ToString());
+        if (_cache.TryGetValue(cacheKey, out TEntity? cachedEntity))
+        {
+            return cachedEntity!;
+        }
+
         if (includeExpression != null)
             query = includeExpression(query);
 
-        return await query.FirstOrDefaultAsync(expression);
-    }   
+        var result = await query.FirstOrDefaultAsync(expression);
+        _cache.Set(cacheKey, result, TimeSpan.FromMinutes(4));
+
+        return result;
+    }
 
     public virtual async Task<bool> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity newEntity)
     {

@@ -239,7 +239,7 @@ namespace Presentation_ConsoleApp.Dialogs
             Console.WriteLine("Press any key to return to Main Menu.");
         }
 
-        //GET and set Methods to be able to set Ids when creating projects
+        //GET Methods to be able to set Ids when creating projects
         public async Task<int> GetCustomerId()
         {
             Console.Clear();
@@ -317,7 +317,7 @@ namespace Presentation_ConsoleApp.Dialogs
             return serviceId;
         }
 
-        //END of get n set methods
+        //END of get methods
 
         //START of Add methods, in case i want to be able to create new entities.
 

@@ -13,7 +13,7 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
 
     public async Task<bool> CreateServiceAsync(ServiceRegistrationForm form)
     {
-        if (form == null)
+        if (form == null || string.IsNullOrWhiteSpace(form.ServiceName))
             return false;
         var entity = ServiceFactory.Create(form);
 
