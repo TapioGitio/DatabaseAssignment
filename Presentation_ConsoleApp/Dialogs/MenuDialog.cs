@@ -99,7 +99,7 @@ namespace Presentation_ConsoleApp.Dialogs
             var projects = await _projectService.ReadAllWithoutDetailsAsync();
 
             //Got help with AI with the Any() here. It was never null so it never got to the else
-            //statement. And I could not figure it out.
+            //statement. And I could not figure it out. I was checking if projects was null at first.
 
             if (projects.Any())
             {

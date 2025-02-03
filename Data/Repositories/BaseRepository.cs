@@ -25,6 +25,9 @@ public abstract class BaseRepository<TEntity>(DataContext context, IMemoryCache 
         {
             await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
+
+            _cache.Remove(GetCacheKey(nameof(ReadAllAsync)));
+
             return true;
 
         }
@@ -41,9 +44,7 @@ public abstract class BaseRepository<TEntity>(DataContext context, IMemoryCache 
 
         var cacheKey = GetCacheKey(nameof(ReadAllAsync));
         if (_cache.TryGetValue(cacheKey, out IEnumerable<TEntity>? cachedEntities))
-        {
             return cachedEntities!;
-        }
 
 
         if (includeExpression != null)
@@ -62,9 +63,7 @@ public abstract class BaseRepository<TEntity>(DataContext context, IMemoryCache 
 
         var cacheKey = GetCacheKey(nameof(ReadAsync), expression.ToString());
         if (_cache.TryGetValue(cacheKey, out TEntity? cachedEntity))
-        {
             return cachedEntity!;
-        }
 
         if (includeExpression != null)
             query = includeExpression(query);
@@ -90,6 +89,9 @@ public abstract class BaseRepository<TEntity>(DataContext context, IMemoryCache 
 
             _context.Entry(oldEntity).CurrentValues.SetValues(newEntity);
             await _context.SaveChangesAsync();
+
+            _cache.Remove(GetCacheKey(nameof(ReadAllAsync)));
+
             return true;
 
         }
@@ -114,6 +116,9 @@ public abstract class BaseRepository<TEntity>(DataContext context, IMemoryCache 
 
             _dbSet.Remove(oldEntity);
             await _context.SaveChangesAsync();
+
+            _cache.Remove(GetCacheKey(nameof(ReadAllAsync)));
+
             return true;
         }
 

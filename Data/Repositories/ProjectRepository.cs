@@ -11,12 +11,20 @@ public class ProjectRepository(DataContext context, IMemoryCache cache) : BaseRe
     
     public async Task<ProjectEntity?> ReadDetailedAsync(int projectId)
     {
-        return await _dbSet
+        var result = await _dbSet
             .Include(x => x.ProjectManager)
             .Include(x => x.Status)
             .Include(x => x.Service)
             .Include(x => x.Customer)
             .FirstOrDefaultAsync(x => x.Id == projectId); 
+
+        var cacheKey = GetCacheKey(nameof(ReadDetailedAsync), projectId.ToString());
+        if (_cache.TryGetValue(cacheKey, out ProjectEntity? cachedEntity))
+            return cachedEntity;
+
+        _cache.Set(cacheKey, result, TimeSpan.FromMinutes(4));
+
+        return result;
     }
 }
 
