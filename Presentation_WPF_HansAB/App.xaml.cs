@@ -6,6 +6,7 @@ using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Presentation_WPF_HansAB.ViewModels;
 using System.Windows;
 
 namespace Presentation_WPF_HansAB
@@ -34,6 +35,7 @@ namespace Presentation_WPF_HansAB
                 services.AddScoped<IStatusService, StatusService>();
                 services.AddScoped<IServiceService, ServiceService>();
 
+                services.AddScoped<MainViewModel>();
                 services.AddScoped<MainWindow>();
             })
             .Build();
