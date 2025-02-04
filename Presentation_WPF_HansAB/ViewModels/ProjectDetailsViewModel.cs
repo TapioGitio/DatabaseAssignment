@@ -2,7 +2,7 @@
 
 namespace Presentation_WPF_HansAB.ViewModels;
 
-public class ProjectDetailsViewModel : ObservableObject
+public partial class ProjectDetailsViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
 }

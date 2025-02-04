@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation_WPF_HansAB" 
-        xmlns:viewmodels="clr-namespace:Presentation_WPF_HansAB.ViewModels"
         
+        xmlns:views="clr-namespace:Presentation_WPF_HansAB.Views" 
+        xmlns:viewmodels="clr-namespace:Presentation_WPF_HansAB.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         
         mc:Ignorable="d"
@@ -21,12 +22,13 @@
             <Image Source="Resources/Images/project_management_coursefees.png"
                    Grid.Row="0"
                    Stretch="Fill"/>
-            <Button x:Name="StartButton" 
+            <Button 
                     Content="Press to open"
                     FontSize="40"
                     Background="LightSlateGray"
                     Foreground="black"
                     Grid.Row="1"
+                    Command="{Binding GoToOverViewCommand}"
                     />
 
         <ContentControl Content="{Binding CurrentViewModel}">
@@ -35,7 +37,7 @@
                     
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewmodels:ProjectOverViewModel}">
-                    
+                    <views:ProjectOverViewView/>
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>

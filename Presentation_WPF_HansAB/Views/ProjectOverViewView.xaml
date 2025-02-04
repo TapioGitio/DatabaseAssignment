@@ -4,9 +4,47 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation_WPF_HansAB.Views"
+             
+             xmlns:views="clr-namespace:Presentation_WPF_HansAB.Views"
+             xmlns:viewmodels="clr-namespace:Presentation_WPF_HansAB.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:ProjectOverViewModel}"
              mc:Ignorable="d" 
+
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <Grid>
-            
+        <ListView Grid.Row="1" 
+                  ItemsSource="{Binding Projects}"
+                  HorizontalContentAlignment="Stretch"
+                  Margin="40 10 40 0"
+                  BorderBrush="Black"
+                  BorderThickness="2"
+                  Background="LightSlateGray"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                  >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5 4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" 
+                                    HorizontalAlignment="Left" 
+                                    >
+
+                            <TextBlock Text="{Binding Id}" />
+                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock Text="{Binding StartDate}" />
+                            <TextBlock Text="{Binding EndDate}" />
+                            <TextBlock Text="{Binding Status}" />
+
+                        </StackPanel>
+
+                        <Button Grid.Column="1"  />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

@@ -1,11 +1,11 @@
 ﻿using Business.Interfaces;
+using Business.Models.SafeToDisplay;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Data.Entities;
 using System.Collections.ObjectModel;
 
 namespace Presentation_WPF_HansAB.ViewModels;
 
-public class ProjectOverViewModel : ObservableObject
+public partial class ProjectOverViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly IProjectService _projectService;
@@ -14,10 +14,18 @@ public class ProjectOverViewModel : ObservableObject
     {
         _serviceProvider = serviceProvider;
         _projectService = projectService;
-        _projects = new ObservableCollection<ProjectEntity>((IEnumerable<ProjectEntity>)_projectService.ReadAllWithoutDetailsAsync());
+        _projects = new ObservableCollection<ProjectOverallView>();
+
+        LoadProjectsAsync();
     }
 
     [ObservableProperty]
-    private ObservableCollection<ProjectEntity> _projects;
+    private ObservableCollection<ProjectOverallView> _projects;
+
+    private async void LoadProjectsAsync()
+    {
+        var projects = await _projectService.ReadAllWithoutDetailsAsync();
+        Projects = new ObservableCollection<ProjectOverallView>(projects);
+    }
 }
 

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Presentation_WPF_HansAB.ViewModels;
+using Presentation_WPF_HansAB.Views;
 using System.Windows;
 
 namespace Presentation_WPF_HansAB
@@ -34,6 +35,10 @@ namespace Presentation_WPF_HansAB
                 services.AddScoped<ICustomerService, CustomerService>();
                 services.AddScoped<IStatusService, StatusService>();
                 services.AddScoped<IServiceService, ServiceService>();
+
+                services.AddScoped<ProjectOverViewModel>();
+                services.AddScoped<ProjectOverViewView>();
+
 
                 services.AddScoped<MainViewModel>();
                 services.AddScoped<MainWindow>();
