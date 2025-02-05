@@ -21,15 +21,15 @@
         
             <Image Source="Resources/Images/project_management_coursefees.png"
                    Grid.Row="0"
-                   Stretch="Fill"/>
+                   Stretch="UniformToFill"/>
             <Button 
-                    Content="Press to open"
+                    Content="Start"
                     FontSize="40"
+                    FontWeight="Bold"
                     Background="LightSlateGray"
                     Foreground="black"
                     Grid.Row="1"
-                    Command="{Binding GoToOverViewCommand}"
-                    />
+                    Command="{Binding GoToOverViewCommand}"/>
 
         <ContentControl Content="{Binding CurrentViewModel}">
             <ContentControl.Resources>

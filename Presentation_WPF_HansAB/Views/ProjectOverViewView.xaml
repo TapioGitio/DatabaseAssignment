@@ -13,10 +13,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     
     <Grid>
-        <ListView Grid.Row="1" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView Grid.Row="0" 
                   ItemsSource="{Binding Projects}"
                   HorizontalContentAlignment="Stretch"
-                  Margin="40 10 40 0"
+                  Margin="40 10 40 10"
                   BorderBrush="Black"
                   BorderThickness="2"
                   Background="LightSlateGray"
@@ -24,7 +27,7 @@
                   >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="5 4">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="*" />
