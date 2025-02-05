@@ -19,7 +19,7 @@
         <ListView Grid.Row="0" 
                   ItemsSource="{Binding Projects}"
                   HorizontalContentAlignment="Stretch"
-                  Margin="40 10 40 10"
+                  Margin="30 10 30 10"
                   BorderBrush="Black"
                   BorderThickness="2"
                   Background="LightSlateGray"
@@ -47,15 +47,22 @@
                         <StackPanel Grid.Column="1"
                                     Orientation="Horizontal"
                                     HorizontalAlignment="Right">
-                            <Button Content="Details" 
+                            <Button Content="View Details" 
                                     Padding="10"
                                     FontSize="12"
                                     FontWeight="DemiBold"
                                     Background="Moccasin"
-                                    CommandParameter="{Binding Id}"
-                                    Command="{Binding}"
+                                    CommandParameter="{Binding}"
+                                    Command="{Binding DataContext.FetchDetailedView, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     />
-
+                            <Button Content="Delete" 
+                                    Padding="10"
+                                    FontSize="12"
+                                    FontWeight="DemiBold"
+                                    Background="Moccasin"
+                                    CommandParameter="{Binding}"
+                                    Command="{Binding DataContext.DeleteProjectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

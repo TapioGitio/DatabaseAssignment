@@ -3,8 +3,8 @@ using Business.Models.SafeToDisplay;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections;
 using System.Collections.ObjectModel;
-using System.Windows.Data;
 
 namespace Presentation_WPF_HansAB.ViewModels;
 
@@ -22,31 +22,35 @@ public partial class ProjectOverViewModel : ObservableObject
         LoadProjectsAsync();
     }
 
-    [ObservableProperty]
-    private ObservableCollection<ProjectOverallView> _projects;
-
-    [ObservableProperty]
-    private int _projectId;
-
     private async void LoadProjectsAsync()
     {
         var projects = await _projectService.ReadAllWithoutDetailsAsync();
         Projects = new ObservableCollection<ProjectOverallView>(projects);
     }
-    public async void ShowDetails(int ProjectId)
-    {
-        var project = await _projectService.ReadOneDetailedAsync(ProjectId);
 
-        GoToDetails(project);
-    }
+    [ObservableProperty]
+    private ObservableCollection<ProjectOverallView> _projects;
 
+    [ObservableProperty]
+    private ProjectDetailedView _detailedProject;
 
     [RelayCommand]
-    private void GoToDetails(ProjectDetailsViewModel project)
+    private async Task FetchDetailedView(ProjectOverallView project) 
     {
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<ProjectDetailsViewModel>();
+        if (project != null)
+        {
+            var detailedProject = await _projectService.ReadOneDetailedAsync(project.Id);
+            DetailedProject = detailedProject;
+        }
     }
 
+    [RelayCommand]
+    private void DeleteProject(ProjectOverallView proj)
+    {
+        if (Projects.Contains(proj))
+        {
+            _projectService.DeleteProjectAsync(proj.Id);
+        }
+    }
 }
 
