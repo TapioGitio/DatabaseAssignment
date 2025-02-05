@@ -44,7 +44,19 @@
 
                         </StackPanel>
 
-                        <Button Grid.Column="1"  />
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+                            <Button Content="Details" 
+                                    Padding="10"
+                                    FontSize="12"
+                                    FontWeight="DemiBold"
+                                    Background="Moccasin"
+                                    CommandParameter="{Binding}"
+                                    Command="{Binding ShowDetailsCommand}"
+                                    />
+
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

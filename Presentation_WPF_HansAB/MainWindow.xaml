@@ -34,6 +34,12 @@
                 <DataTemplate DataType="{x:Type viewmodels:ProjectOverViewModel}">
                     <views:ProjectOverViewView/>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:ProjectDetailsViewModel}">
+                    <views:ProjectDetailedViewView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:ProjectAddViewModel}">
+                    <views:ProjectAddViewView/>
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
     </Grid>

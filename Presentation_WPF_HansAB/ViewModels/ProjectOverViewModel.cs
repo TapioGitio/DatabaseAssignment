@@ -2,6 +2,7 @@
 using Business.Models.SafeToDisplay;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Windows.Data;
 
 namespace Presentation_WPF_HansAB.ViewModels;
 
@@ -26,6 +27,11 @@ public partial class ProjectOverViewModel : ObservableObject
     {
         var projects = await _projectService.ReadAllWithoutDetailsAsync();
         Projects = new ObservableCollection<ProjectOverallView>(projects);
+    }
+
+    private async void ShowDetails(int projectId)
+    {
+        var project = await _projectService.ReadOneDetailedAsync(projectId);
     }
 }
 
