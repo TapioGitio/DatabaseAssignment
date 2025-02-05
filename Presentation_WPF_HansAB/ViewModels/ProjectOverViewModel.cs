@@ -1,6 +1,8 @@
 ﻿using Business.Interfaces;
 using Business.Models.SafeToDisplay;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
 
@@ -23,17 +25,28 @@ public partial class ProjectOverViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<ProjectOverallView> _projects;
 
+    [ObservableProperty]
+    private int _projectId;
+
     private async void LoadProjectsAsync()
     {
         var projects = await _projectService.ReadAllWithoutDetailsAsync();
         Projects = new ObservableCollection<ProjectOverallView>(projects);
     }
-
-    private async void ShowDetails(int projectId)
+    public async void ShowDetails(int ProjectId)
     {
-        var project = await _projectService.ReadOneDetailedAsync(projectId);
+        var project = await _projectService.ReadOneDetailedAsync(ProjectId);
 
-        var mainViewModel
+        GoToDetails(project);
     }
+
+
+    [RelayCommand]
+    private void GoToDetails(ProjectDetailsViewModel project)
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<ProjectDetailsViewModel>();
+    }
+
 }
 

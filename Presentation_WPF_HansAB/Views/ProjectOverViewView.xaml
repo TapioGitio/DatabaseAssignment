@@ -52,8 +52,8 @@
                                     FontSize="12"
                                     FontWeight="DemiBold"
                                     Background="Moccasin"
-                                    CommandParameter="{Binding}"
-                                    Command="{Binding ShowDetailsCommand}"
+                                    CommandParameter="{Binding Id}"
+                                    Command="{Binding}"
                                     />
 
                         </StackPanel>
