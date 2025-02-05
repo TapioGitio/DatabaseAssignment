@@ -15,7 +15,6 @@
         </Grid.RowDefinitions>
         <ListView Grid.Row="0" 
                   ItemsSource="{Binding SelectedProject}"
-                  SelectedItem="{Binding SelectedProject}"
                   HorizontalContentAlignment="Stretch"
                   Margin="30 10 30 10"
                   BorderBrush="Black"
@@ -50,7 +49,7 @@
                                     FontSize="12"
                                     FontWeight="DemiBold"
                                     Background="Moccasin"
-                                    Command="{Binding Fet}"
+                                    Command="{Binding}"
                                     CommandParameter="{Binding SelectedProject}"
                                     />
                         </StackPanel>

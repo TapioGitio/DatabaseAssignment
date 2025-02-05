@@ -8,8 +8,6 @@ public partial class ProjectDetailsViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
 
-    [ObservableProperty]
-    public ProjectDetailedView? _selectedProject;
 
 
 
