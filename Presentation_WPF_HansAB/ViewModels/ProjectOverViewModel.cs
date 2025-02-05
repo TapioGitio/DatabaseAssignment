@@ -32,6 +32,8 @@ public partial class ProjectOverViewModel : ObservableObject
     private async void ShowDetails(int projectId)
     {
         var project = await _projectService.ReadOneDetailedAsync(projectId);
+
+        var mainViewModel
     }
 }
 
