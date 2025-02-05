@@ -36,12 +36,12 @@ public partial class App : Application
             services.AddScoped<IStatusService, StatusService>();
             services.AddScoped<IServiceService, ServiceService>();
 
-            services.AddScoped<ProjectOverViewModel>();
-            services.AddScoped<ProjectOverViewView>();
+            services.AddTransient<ProjectOverViewModel>();
+            services.AddTransient<ProjectOverViewView>();
 
 
-            services.AddScoped<MainViewModel>();
-            services.AddScoped<MainWindow>();
+            services.AddSingleton<MainViewModel>();
+            services.AddSingleton<MainWindow>();
         })
         .Build();
     }

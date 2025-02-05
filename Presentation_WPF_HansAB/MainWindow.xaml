@@ -16,21 +16,16 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        
-            <Image Source="Resources/Images/project_management_coursefees.png"
-                   Grid.Row="0"
-                   Stretch="UniformToFill"/>
-            <Button 
-                    Content="Start"
-                    FontSize="40"
-                    FontWeight="Bold"
-                    Background="LightSlateGray"
-                    Foreground="black"
-                    Grid.Row="1"
-                    Command="{Binding GoToOverViewCommand}"/>
 
+        <Button Command="{Binding GoToOverViewCommand}"
+                Background="Transparent"
+                Cursor="Hand">
+            
+            <Image Source="Resources/Images/project_management_coursefees.png"
+                    Stretch="UniformToFill"/>
+        </Button>
+  
         <ContentControl Content="{Binding CurrentViewModel}">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type viewmodels:MainViewModel}">

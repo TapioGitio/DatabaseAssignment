@@ -9,4 +9,9 @@ public partial class MainWindow : Window
         InitializeComponent();
         DataContext = mainViewModel;
     }
+
+    private void Image_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+
+    }
 }
