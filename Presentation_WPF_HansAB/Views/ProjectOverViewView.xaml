@@ -15,11 +15,12 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <ListView Grid.Row="0" 
                   ItemsSource="{Binding Projects}"
                   HorizontalContentAlignment="Stretch"
-                  Margin="30 10 30 10"
+                  Margin="10 10 10 0"
                   BorderBrush="Black"
                   BorderThickness="2"
                   Background="LightSlateGray"
@@ -68,5 +69,14 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Content="Add New Project"
+                Grid.Row="1"
+                Background="Transparent"
+                Foreground="Moccasin"
+                Padding="10"
+                FontSize="16"
+                FontWeight="ExtraBlack"
+                Command="{Binding GoToAddViewCommand}"
+                />
     </Grid>
 </UserControl>

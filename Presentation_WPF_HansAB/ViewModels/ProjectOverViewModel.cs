@@ -3,7 +3,6 @@ using Business.Models.SafeToDisplay;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections;
 using System.Collections.ObjectModel;
 
 namespace Presentation_WPF_HansAB.ViewModels;
@@ -45,6 +44,13 @@ public partial class ProjectOverViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void GoToAddView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<ProjectAddViewModel>();
+    }
+
+    [RelayCommand]
     private void DeleteProject(ProjectOverallView proj)
     {
         if (Projects.Contains(proj))
@@ -52,5 +58,6 @@ public partial class ProjectOverViewModel : ObservableObject
             _projectService.DeleteProjectAsync(proj.Id);
         }
     }
+
 }
 

@@ -4,9 +4,64 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation_WPF_HansAB.Views"
+             xmlns:views="clr-namespace:Presentation_WPF_HansAB.Views"
+             xmlns:viewmodels="clr-namespace:Presentation_WPF_HansAB.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:ProjectAddViewModel}"
+             
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+
+
+        <StackPanel Grid.Column="0" Grid.Row="1" Margin="20 0 20 0">
+            <Label Content="Project Name"/>
+            <TextBox Text="{Binding PForm.Name , UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Content="Start date*" />
+            <TextBox Text="{Binding PForm.StartDate, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Label Content="Due date" />
+            <TextBox Text="{Binding PForm.EndDate, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="20 0 20 0">
+            <Label Content="Phone number (optional)" />
+            <TextBox Text="{Binding RegForm.PhoneNumber}" />
+            <Label Content="Address (optional)" />
+            <TextBox Text="{Binding RegForm.Address}" />
+            <Label Content="Postal code (optional)" />
+            <TextBox Text="{Binding RegForm.PostalCode}" />
+            <Label Content="City (optional)" />
+            <TextBox Text="{Binding RegForm.City}" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="2" 
+                    Grid.Row="2"
+                    Margin="0 40 0 0"
+                    HorizontalAlignment="Center">
+
+            <Button 
+                Content="Save"
+                Command="{Binding SaveCommand}"
+                />
+            <Button  
+                Content="Back"
+                Command="{Binding SwingHomeCommand}"/>
+        </StackPanel>
+
     </Grid>
 </UserControl>
