@@ -21,26 +21,21 @@ public partial class ProjectOverViewModel : ObservableObject
         Task.Run(() => LoadProjectsAsync());
     }
 
+    [ObservableProperty]
+    private ObservableCollection<ProjectOverallView> _projects;
+
     private async Task LoadProjectsAsync()
     {
         var projects = await _projectService.ReadAllWithoutDetailsAsync();
         Projects = new ObservableCollection<ProjectOverallView>(projects);
     }
 
-    [ObservableProperty]
-    private ObservableCollection<ProjectOverallView> _projects;
-
-    [ObservableProperty]
-    private ProjectDetailedView _detailedProject;
-
     [RelayCommand]
-    private async Task FetchDetailedView(ProjectOverallView project) 
+    private void GoToDetailedView()
     {
-        if (project != null)
-        {
-            var detailedProject = await _projectService.ReadOneDetailedAsync(project.Id);
-            DetailedProject = detailedProject;
-        }
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<ProjectDetailsViewModel>();
+
     }
 
     [RelayCommand]

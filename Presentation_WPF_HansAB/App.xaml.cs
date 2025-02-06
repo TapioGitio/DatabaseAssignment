@@ -35,7 +35,7 @@ public partial class App : Application
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IStatusService, StatusService>();
             services.AddScoped<IServiceService, ServiceService>();
-
+  
             services.AddTransient<ProjectOverViewModel>();
             services.AddTransient<ProjectOverViewView>();
             services.AddTransient<ProjectDetailsViewModel>();
