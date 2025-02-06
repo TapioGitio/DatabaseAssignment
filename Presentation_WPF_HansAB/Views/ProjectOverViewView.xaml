@@ -54,7 +54,7 @@
                                     FontWeight="DemiBold"
                                     Background="Moccasin"
                                     CommandParameter="{Binding Id}"
-                                    Command="{Binding GoToDetailedViewCommand}"
+                                    Command="{Binding DataContext.GoToDetailedViewCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     />
                             <Button Content="Delete" 
                                     Padding="10"

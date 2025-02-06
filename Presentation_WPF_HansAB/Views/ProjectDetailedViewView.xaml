@@ -8,53 +8,51 @@
              xmlns:viewmodels="clr-namespace:Presentation_WPF_HansAB.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:ProjectDetailsViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="LightSlateGray">
+    
+            
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ListView Grid.Row="0" 
-                  ItemsSource="{Binding}"
-                  HorizontalContentAlignment="Stretch"
-                  Margin="30 10 30 10"
-                  BorderBrush="Black"
-                  BorderThickness="2"
-                  Background="LightSlateGray"
-                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                  >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" 
-                                    HorizontalAlignment="Left">
+            <StackPanel Grid.Row="0" Margin="20">
+                <TextBlock Text="Project Details" FontSize="24" FontWeight="Bold" Foreground="White" />
 
-                        </StackPanel>
+                <TextBlock Text="Project ID:" FontWeight="Bold"/>
+                <TextBlock Text="{Binding ProjectId}" Foreground="Black"/>
 
-                        <StackPanel Grid.Column="1"
-                                    Orientation="Horizontal"
-                                    HorizontalAlignment="Right">
-                            <Button Content="Update" 
-                                    Padding="10"
-                                    FontSize="12"
-                                    FontWeight="DemiBold"
-                                    Background="Moccasin"
-                                    Command="{Binding}"
-                                    />
-                            <Button Content="Back" 
-                                    Padding="10"
-                                    FontSize="12"
-                                    FontWeight="DemiBold"
-                                    Background="Moccasin"
-                                    Command="{Binding}"
-                                    />
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                <TextBlock Text="Project Name:" FontWeight="Bold"/>
+                <TextBlock Text="{Binding ProjectName}" Foreground="Black"/>
+
+                <TextBlock Text="Description:" FontWeight="Bold"/>
+                <TextBlock Text="{Binding StartDate}" Foreground="Black"/>
+
+                <TextBlock Text="Start Date:" FontWeight="Bold"/>
+                <TextBlock Text="{Binding EndDate}" Foreground="Black"/>
+
+                <TextBlock Text="End Date:" FontWeight="Bold"/>
+                <TextBlock Text="{Binding Status }" Foreground="Black"/>
+
+                <TextBlock Text="Status:" FontWeight="Bold"/>
+                <TextBlock Text="{Binding ServiceName}" Foreground="Black"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Update" 
+                    Padding="10"
+                    FontSize="12"
+                    FontWeight="DemiBold"
+                    Background="Moccasin"
+                    Command="{Binding UpdateProjectCommand}"
+                    />
+            <Button Content="Back" 
+                    Padding="10"
+                    FontSize="12"
+                    FontWeight="DemiBold"
+                    Background="Moccasin"
+                    Command="{Binding GoBackCommand}"
+                    Margin="10,0,0,0"/>
+        </StackPanel>
     </Grid>
 </UserControl>

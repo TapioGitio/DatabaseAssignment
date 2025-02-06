@@ -31,13 +31,20 @@ public partial class ProjectOverViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void GoToDetailedView()
+    private async Task GoToDetailedView(int projectId)
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
-        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<ProjectDetailsViewModel>();
 
+        // Fetch the detailed project from the service
+        var detailedView = await _projectService.ReadOneDetailedAsync(projectId);
+
+
+        // Create a new instance of the ProjectDetailsViewModel
+        var detailsViewModel = ActivatorUtilities.CreateInstance<ProjectDetailsViewModel>(_serviceProvider, detailedView);
+
+        // Set it as the current view in the main window
+        mainViewModel.CurrentViewModel = detailsViewModel;
     }
-
     [RelayCommand]
     private void GoToAddView()
     {

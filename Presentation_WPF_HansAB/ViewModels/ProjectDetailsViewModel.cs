@@ -76,5 +76,10 @@ public partial class ProjectDetailsViewModel : ObservableObject
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<ProjectOverViewModel>();
     }
+    [RelayCommand]
+    private void UpdateProject()
+    {
+
+    }
 }
 
