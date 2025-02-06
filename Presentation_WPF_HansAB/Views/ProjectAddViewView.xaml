@@ -7,44 +7,71 @@
              xmlns:views="clr-namespace:Presentation_WPF_HansAB.Views"
              xmlns:viewmodels="clr-namespace:Presentation_WPF_HansAB.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:ProjectAddViewModel}"
-             
+             Background="LightSlateGray"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
 
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Margin="20 0 20 0">
+        <StackPanel Grid.Column="0" Grid.Row="0"
+                    Margin="200 10 20 0">
             <Label Content="Project Name"/>
-            <TextBox Text="{Binding PForm.Name , UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Text="{Binding PForm.Name , UpdateSourceTrigger=PropertyChanged}"
+                     Width="200"
+                     HorizontalAlignment="Left"
+                     />
 
             <Label Content="Start date*" />
-            <TextBox Text="{Binding PForm.StartDate, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding PForm.StartDate, UpdateSourceTrigger=PropertyChanged}"
+                     Width="200"
+                     HorizontalAlignment="Left"
+                     />
 
             <Label Content="Due date" />
-            <TextBox Text="{Binding PForm.EndDate, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Text="{Binding PForm.EndDate, UpdateSourceTrigger=PropertyChanged}"
+                     Width="200"
+                     HorizontalAlignment="Left"
+                     />
+
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Margin="20 0 20 0">
-            <Label Content="Phone number (optional)" />
-            <TextBox Text="{Binding RegForm.PhoneNumber}" />
-            <Label Content="Address (optional)" />
-            <TextBox Text="{Binding RegForm.Address}" />
-            <Label Content="Postal code (optional)" />
-            <TextBox Text="{Binding RegForm.PostalCode}" />
-            <Label Content="City (optional)" />
-            <TextBox Text="{Binding RegForm.City}" />
+        <StackPanel Grid.Column="1" Grid.Row="0"
+                    Margin="0 10 0 0">
+            <Label Content="Select Status" />
+            <ComboBox ItemsSource="{Binding Statuses}" 
+                      SelectedItem="{Binding SelectedStatus}"
+                      DisplayMemberPath="StatusName"
+                      Width="200"/>
+            
+            <Label Content="Select Service" />
+            <ComboBox ItemsSource="{Binding Services}" 
+                       SelectedItem="{Binding SelectedService}"
+                       DisplayMemberPath="ServiceName"
+                       Width="200"/>
+            
+            <Label Content="Select Project Manager" />
+            <ComboBox ItemsSource="{Binding Pms}" 
+                       SelectedItem="{Binding SelectedPM}"
+                       DisplayMemberPath="FullName"
+                       Width="200"/>
+            
+            <Label Content="Select Customer" />
+            <ComboBox ItemsSource="{Binding Customers}" 
+                       SelectedItem="{Binding SelectedCustomer}"
+                       DisplayMemberPath="FullName"
+                       Width="200"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
@@ -56,11 +83,21 @@
 
             <Button 
                 Content="Save"
-                Command="{Binding SaveCommand}"
+                Padding="20"
+                FontSize="12"
+                FontWeight="DemiBold"
+                Background="Moccasin" 
+                Command="{Binding SaveProjectCommand}"
+                Margin="200 0 0 0"
                 />
             <Button  
                 Content="Back"
-                Command="{Binding SwingHomeCommand}"/>
+                Padding="20"
+                FontSize="12"
+                FontWeight="DemiBold"
+                Background="Moccasin"
+                Margin="20 0 0 0"
+                Command="{Binding GoBackCommand}"/>
         </StackPanel>
 
     </Grid>

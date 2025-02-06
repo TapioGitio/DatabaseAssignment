@@ -9,7 +9,7 @@
              xmlns:viewmodels="clr-namespace:Presentation_WPF_HansAB.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:ProjectOverViewModel}"
              mc:Ignorable="d" 
-
+             Background="LightSlateGray"
              d:DesignHeight="450" d:DesignWidth="800">
     
     <Grid>

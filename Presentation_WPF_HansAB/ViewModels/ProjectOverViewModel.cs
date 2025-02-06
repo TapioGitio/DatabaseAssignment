@@ -18,10 +18,10 @@ public partial class ProjectOverViewModel : ObservableObject
         _projectService = projectService;
         _projects = new ObservableCollection<ProjectOverallView>();
 
-        LoadProjectsAsync();
+        Task.Run(() => LoadProjectsAsync());
     }
 
-    private async void LoadProjectsAsync()
+    private async Task LoadProjectsAsync()
     {
         var projects = await _projectService.ReadAllWithoutDetailsAsync();
         Projects = new ObservableCollection<ProjectOverallView>(projects);
@@ -51,11 +51,12 @@ public partial class ProjectOverViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void DeleteProject(ProjectOverallView proj)
+    private async Task DeleteProject(ProjectOverallView proj)
     {
         if (Projects.Contains(proj))
         {
-            _projectService.DeleteProjectAsync(proj.Id);
+            await _projectService.DeleteProjectAsync(proj.Id);
+            await LoadProjectsAsync();
         }
     }
 
