@@ -86,6 +86,17 @@ public partial class ProjectDetailsViewModel : ObservableObject
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<ProjectOverViewModel>();
     }
 
+    [RelayCommand]
+    private async Task GoToUpdateView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
 
+        var upgradeProject = await _projectService.ReadOneDetailedAsync(ProjectId);
+
+        var upgradeView = ActivatorUtilities.CreateInstance<ProjectUpdateViewModel>(_serviceProvider, upgradeProject);
+
+        mainViewModel.CurrentViewModel = upgradeView;
+    }
 }
 
+    

@@ -28,19 +28,19 @@
         <StackPanel Grid.Column="0" Grid.Row="0"
                   Margin="200 10 20 0">
             <Label Content="Project Name"/>
-            <TextBox Text="{Binding}"
+            <TextBox Text="{Binding UpgradeForm.Name, UpdateSourceTrigger=PropertyChanged}"
                    Width="200"
                    HorizontalAlignment="Left"
                    />
 
             <Label Content="Start date" />
-            <TextBox Text="{Binding PForm.StartDate, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Text="{Binding UpgradeForm.StartDate, UpdateSourceTrigger=PropertyChanged}"
                    Width="200"
                    HorizontalAlignment="Left"
                    />
 
             <Label Content="Due date" />
-            <TextBox Text="{Binding PForm.EndDate, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Text="{Binding UpgradeForm.EndDate, UpdateSourceTrigger=PropertyChanged}"
                    Width="200"
                    HorizontalAlignment="Left"
                    />
@@ -87,7 +87,7 @@
               FontSize="12"
               FontWeight="DemiBold"
               Background="Moccasin" 
-              Command="{Binding SaveProjectCommand}"
+              Command="{Binding UpdateProjectCommand}"
               Margin="200 0 0 0"
               />
             <Button  

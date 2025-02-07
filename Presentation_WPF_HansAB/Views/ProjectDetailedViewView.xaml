@@ -116,8 +116,8 @@
                     FontSize="12"
                     FontWeight="DemiBold"
                     Background="Moccasin"
-                    CommandParameter="{Binding ProjectId}"
-                    Command="{Binding UpdateProjectCommand}"
+                    CommandParameter="{Binding}"
+                    Command="{Binding GoToUpdateViewCommand}"
                     />
             <Button Content="Back" 
                     Padding="10"

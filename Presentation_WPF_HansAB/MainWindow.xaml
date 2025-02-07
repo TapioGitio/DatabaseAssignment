@@ -40,6 +40,9 @@
                 <DataTemplate DataType="{x:Type viewmodels:ProjectAddViewModel}">
                     <views:ProjectAddViewView/>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:ProjectUpdateViewModel}">
+                    <views:ProjectUpdateView/>
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
     </Grid>

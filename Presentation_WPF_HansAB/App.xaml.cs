@@ -42,6 +42,8 @@ public partial class App : Application
             services.AddTransient<ProjectDetailedViewView>();
             services.AddTransient<ProjectAddViewModel>();
             services.AddTransient<ProjectAddViewView>();
+            services.AddTransient<ProjectUpdateViewModel>();
+            services.AddTransient<ProjectUpdateView>();
 
 
             services.AddSingleton<MainViewModel>();
