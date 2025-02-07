@@ -40,82 +40,83 @@
             </Grid.ColumnDefinitions>
             
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Project Name:" FontWeight="Bold" Foreground="Moccasin"/>
-                <TextBox Text="{Binding ProjectName}" 
+                <TextBlock Text="Project:" FontWeight="Bold" Foreground="Moccasin"/>
+                <TextBlock Text="{Binding ProjectName}"
                          Foreground="Black" 
                          FontSize="14"
-                         Background="LightGray"/>
+                         />
 
                 <TextBlock Text="Start Date:" FontWeight="Bold"/>
-                <TextBox Text="{Binding StartDate}" 
+                <TextBlock Text="{Binding StartDate}" 
                          Foreground="Black" 
                          FontSize="14"
-                         Background="LightGray"/>
+                         />
 
                 <TextBlock Text="End Date:" FontWeight="Bold"/>
-                <TextBox Text="{Binding EndDate }" 
+                <TextBlock Text="{Binding EndDate }" 
                          Foreground="Black" 
                          FontSize="14"
-                         Background="LightGray"/>
+                         />
 
                 <TextBlock Text="Status:" FontWeight="Bold"/>
-                <TextBox Text="{Binding Status}" 
+                <TextBlock Text="{Binding Status}" 
                          Foreground="Black" 
                          FontSize="14"
-                         Background="LightGray"/>
+                         />
             </StackPanel>
 
             <StackPanel Grid.Column="1"
                         Margin="40 0 40 0">
                 <TextBlock Text="Project Manager:" FontWeight="bold" Foreground="Moccasin"/>
-                <TextBox Text="{Binding ManagerFullName}" 
+                <TextBlock Text="{Binding ManagerFullName}" 
                          Foreground="Black" 
                          FontSize="14"
-                         Background="LightGray"/>
+                         />
 
                 <TextBlock Text="Phone number:" FontWeight="bold"/>
-                <TextBox Text="{Binding ManagerPhone}" 
+                <TextBlock Text="{Binding ManagerPhone}" 
                          Foreground="Black" 
                          FontSize="14"
-                         Background="LightGray"/>
+                         />
             </StackPanel>
 
             <StackPanel Grid.Column="2"
                         Margin="0 0 40 0">
                 <TextBlock Text="Customer:" FontWeight="bold" Foreground="Moccasin"/>
-                <TextBox Text="{Binding CustomerFullName}" 
+                <TextBlock Text="{Binding CustomerFullName}" 
                          Foreground="Black" 
                          FontSize="14"
-                         Background="LightGray"/>
+                         />
 
                 <TextBlock Text="Email:" FontWeight="bold"/>
-                <TextBox Text="{Binding CustomerEmail}" 
+                <TextBlock Text="{Binding CustomerEmail}" 
                          Foreground="Black" 
                          FontSize="14"
-                         Background="LightGray"/>
+                         />
             </StackPanel>
 
             <StackPanel Grid.Column="3">
                 <TextBlock Text="Service:" FontWeight="bold" Foreground="Moccasin"/>
-                <TextBox Text="{Binding ServiceName}" 
+                <TextBlock Text="{Binding ServiceName}" 
                          Foreground="Black" 
                          FontSize="14" 
-                         Background="LightGray"/>
+                         />
 
-                <TextBlock Text="Service Price:" FontWeight="bold"/>
-                <TextBox Text="{Binding Price}" 
+                <TextBlock Text="Price:" FontWeight="bold"/>
+                <TextBlock Text="{Binding Price}" 
                          Foreground="Black" 
                          FontSize="14" 
-                         Background="LightGray"/>
+                         />
             </StackPanel>
         </Grid>
         
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Update" 
+            <Button Content="Edit" 
                     Padding="10"
                     FontSize="12"
                     FontWeight="DemiBold"
                     Background="Moccasin"
+                    CommandParameter="{Binding ProjectId}"
                     Command="{Binding UpdateProjectCommand}"
                     />
             <Button Content="Back" 
