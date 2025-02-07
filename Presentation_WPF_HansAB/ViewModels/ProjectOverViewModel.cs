@@ -35,14 +35,15 @@ public partial class ProjectOverViewModel : ObservableObject
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
 
-        // Fetch the detailed project from the service
         var detailedView = await _projectService.ReadOneDetailedAsync(projectId);
 
 
-        // Create a new instance of the ProjectDetailsViewModel
+        // Got help from ai with this ActivatorUtilities to be able to send the appropriate object
+        // To the other view. The "GetRequiredService" was not able to send parameters.
+        // But this Class enables the opportunity to send my detailedview in a parameter.
+
         var detailsViewModel = ActivatorUtilities.CreateInstance<ProjectDetailsViewModel>(_serviceProvider, detailedView);
 
-        // Set it as the current view in the main window
         mainViewModel.CurrentViewModel = detailsViewModel;
     }
     [RelayCommand]

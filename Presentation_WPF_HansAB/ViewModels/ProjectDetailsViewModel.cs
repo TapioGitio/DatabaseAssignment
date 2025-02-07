@@ -39,6 +39,9 @@ public partial class ProjectDetailsViewModel : ObservableObject
     private string _managerLastName;
 
     [ObservableProperty]
+    private string _managerFullName;
+
+    [ObservableProperty]
     private string _managerPhone;
 
     [ObservableProperty]
@@ -46,6 +49,9 @@ public partial class ProjectDetailsViewModel : ObservableObject
 
     [ObservableProperty]
     private string _customerLastName;
+
+    [ObservableProperty]
+    private string _customerFullName;
 
     [ObservableProperty]
     private string _customerEmail;
@@ -64,9 +70,11 @@ public partial class ProjectDetailsViewModel : ObservableObject
         Price = detailedView.Price;
         CustomerFirstName = detailedView.CustomerFirstName;
         CustomerLastName = detailedView.CustomerLastName;
+        CustomerFullName = detailedView.CustomerFullName;
         CustomerEmail = detailedView.CustomerEmail;
         ManagerFirstName = detailedView.ManagerFirstName;
         ManagerLastName = detailedView.ManagerLastName;
+        ManagerFullName = detailedView.ManagerFullName;
         ManagerPhone = detailedView.ManagerPhoneNumber;
     }
 

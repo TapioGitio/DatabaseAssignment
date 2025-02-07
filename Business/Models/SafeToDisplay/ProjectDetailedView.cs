@@ -13,8 +13,10 @@ public class ProjectDetailedView
     public decimal Price { get; set; }
     public string ManagerFirstName { get; set; } = null!;
     public string ManagerLastName { get; set; } = null!;
+    public string ManagerFullName => $"{ManagerFirstName} {ManagerLastName}";
     public string ManagerPhoneNumber { get; set; } = null!;
     public string CustomerFirstName { get; set; } = null!;
     public string CustomerLastName { get; set; } = null!;
+    public string CustomerFullName => $"{CustomerFirstName} {CustomerLastName}";
     public string CustomerEmail { get; set; } = null!;
 }
