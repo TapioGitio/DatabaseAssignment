@@ -1,8 +1,10 @@
 ﻿using Business.Interfaces;
 using Business.Models.SafeToDisplay;
+using Business.Models.UpdateForms;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.ObjectModel;
 
 namespace Presentation_WPF_HansAB.ViewModels;
 
@@ -10,6 +12,9 @@ public partial class ProjectDetailsViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly IProjectService _projectService;
+
+    [ObservableProperty]
+    private ObservableCollection<ProjectUpdateForm> _form = [];
 
     [ObservableProperty]
     private int _projectId;
@@ -85,7 +90,7 @@ public partial class ProjectDetailsViewModel : ObservableObject
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<ProjectOverViewModel>();
     }
     [RelayCommand]
-    private void UpdateProject()
+    private async Task UpdateProject()
     {
 
     }

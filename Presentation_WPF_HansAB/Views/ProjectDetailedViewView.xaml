@@ -26,7 +26,6 @@
                         Margin="20 20 0 20"
                         Grid.Row="0"
                         />
-            
             <TextBlock Text="{Binding ProjectId}" FontWeight="Bold" Margin="10 33 0 0" Foreground="Moccasin" />
         </StackPanel>
         
@@ -42,42 +41,72 @@
             
             <StackPanel Grid.Column="0">
                 <TextBlock Text="Project Name:" FontWeight="Bold" Foreground="Moccasin"/>
-                <TextBlock Text="{Binding ProjectName}" Foreground="Black" FontSize="13"/>
+                <TextBox Text="{Binding ProjectName}" 
+                         Foreground="Black" 
+                         FontSize="14"
+                         Background="LightGray"/>
 
                 <TextBlock Text="Start Date:" FontWeight="Bold"/>
-                <TextBlock Text="{Binding StartDate}" Foreground="Black" FontSize="13"/>
+                <TextBox Text="{Binding StartDate}" 
+                         Foreground="Black" 
+                         FontSize="14"
+                         Background="LightGray"/>
 
                 <TextBlock Text="End Date:" FontWeight="Bold"/>
-                <TextBlock Text="{Binding EndDate }" Foreground="Black" FontSize="13"/>
+                <TextBox Text="{Binding EndDate }" 
+                         Foreground="Black" 
+                         FontSize="14"
+                         Background="LightGray"/>
 
                 <TextBlock Text="Status:" FontWeight="Bold"/>
-                <TextBlock Text="{Binding Status}" Foreground="Black" FontSize="13"/>
+                <TextBox Text="{Binding Status}" 
+                         Foreground="Black" 
+                         FontSize="14"
+                         Background="LightGray"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1"
                         Margin="40 0 40 0">
                 <TextBlock Text="Project Manager:" FontWeight="bold" Foreground="Moccasin"/>
-                <TextBlock Text="{Binding ManagerFullName}" Foreground="Black" FontSize="13"/>
+                <TextBox Text="{Binding ManagerFullName}" 
+                         Foreground="Black" 
+                         FontSize="14"
+                         Background="LightGray"/>
 
                 <TextBlock Text="Phone number:" FontWeight="bold"/>
-                <TextBlock Text="{Binding ManagerPhone}" Foreground="Black" FontSize="13"/>
+                <TextBox Text="{Binding ManagerPhone}" 
+                         Foreground="Black" 
+                         FontSize="14"
+                         Background="LightGray"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2"
                         Margin="0 0 40 0">
                 <TextBlock Text="Customer:" FontWeight="bold" Foreground="Moccasin"/>
-                <TextBlock Text="{Binding CustomerFullName}" Foreground="Black" FontSize="13"/>
+                <TextBox Text="{Binding CustomerFullName}" 
+                         Foreground="Black" 
+                         FontSize="14"
+                         Background="LightGray"/>
 
                 <TextBlock Text="Email:" FontWeight="bold"/>
-                <TextBlock Text="{Binding CustomerEmail}" Foreground="Black" FontSize="13"/>
+                <TextBox Text="{Binding CustomerEmail}" 
+                         Foreground="Black" 
+                         FontSize="14"
+                         Background="LightGray"/>
             </StackPanel>
 
             <StackPanel Grid.Column="3">
                 <TextBlock Text="Service:" FontWeight="bold" Foreground="Moccasin"/>
-                <TextBlock Text="{Binding ServiceName}" Foreground="Black" FontSize="13"/>
+                <TextBox Text="{Binding ServiceName}" 
+                         Foreground="Black" 
+                         FontSize="14" 
+                         Background="LightGray"/>
 
                 <TextBlock Text="Service Price:" FontWeight="bold"/>
-                <TextBlock Text="{Binding Price}" Foreground="Black" FontSize="13"/>
+                <TextBox Text="{Binding Price}" 
+                         Foreground="Black" 
+                         FontSize="14" 
+                         Background="LightGray"/>
             </StackPanel>
         </Grid>
         

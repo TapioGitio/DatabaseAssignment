@@ -72,6 +72,7 @@ public partial class ProjectAddViewModel : ObservableObject
         PForm.CustomerId = SelectedCustomer.Id;
 
         await _projectService.CreateProjectAsync(PForm);
+        GoBack();
     }
 
     private async Task LoadEntityIds()

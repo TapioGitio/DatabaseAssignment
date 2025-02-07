@@ -33,7 +33,7 @@
                      HorizontalAlignment="Left"
                      />
 
-            <Label Content="Start date*" />
+            <Label Content="Start date" />
             <TextBox Text="{Binding PForm.StartDate, UpdateSourceTrigger=PropertyChanged}"
                      Width="200"
                      HorizontalAlignment="Left"
