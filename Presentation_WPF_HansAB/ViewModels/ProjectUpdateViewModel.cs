@@ -18,6 +18,12 @@ public partial class ProjectUpdateViewModel : ObservableObject
     private readonly ICustomerService _customerService;
 
     [ObservableProperty]
+    private bool _inputCorrect = false;
+
+    [ObservableProperty]
+    private string _errorMessage = string.Empty;
+
+    [ObservableProperty]
     private ObservableCollection<Status> _statuses = new();
 
     [ObservableProperty]
@@ -32,7 +38,7 @@ public partial class ProjectUpdateViewModel : ObservableObject
     [ObservableProperty]
     private ProjectDetailedView _detailedView;
     [ObservableProperty]
-    private ProjectUpdateForm _upgradeForm = new();
+    private ProjectUpdateForm _updateForm = new();
 
     [ObservableProperty]
     private Status _selectedStatus = null!;
@@ -54,18 +60,65 @@ public partial class ProjectUpdateViewModel : ObservableObject
         _projectManagerService = projectManagerService;
         _customerService = customerService;
         Task.Run(() => LoadEntityIds());
+
+        // AI helped me with this to be able to check when properties changed
+        //thought mvvm would have a automatic way but tried and failed until I
+        //found this. It checks when some attributes change and run my method to validate.
+        //If it passes the button update becomes available
+        PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(SelectedStatus) ||
+                e.PropertyName == nameof(SelectedService) ||
+                e.PropertyName == nameof(SelectedPM) ||
+                e.PropertyName == nameof(SelectedCustomer))
+            {
+                CheckInput();
+            }
+        };
+    }
+
+    private void CheckInput()
+    {
+        if (SelectedStatus != null
+            && SelectedService != null
+            && SelectedPM != null
+            && SelectedCustomer != null)
+        {
+            InputCorrect = true;
+            ErrorMessage = string.Empty;
+        }
+        else
+        {
+            InputCorrect = false;
+            ErrorMessage = "All selections must be made in order to update";
+
+        }
     }
 
     [RelayCommand]
     private async Task UpdateProjectAsync()
     {
-        UpgradeForm.StatusId = SelectedStatus.Id;
-        UpgradeForm.ServiceId = SelectedService.Id;
-        UpgradeForm.ProjectManagerId = SelectedPM.Id;
-        UpgradeForm.CustomerId = SelectedCustomer.Id;
 
-        await _projectService.UpdateProjectAsync(DetailedView.Id, UpgradeForm);
-        GoBack();
+        try
+        {
+            if (!string.IsNullOrWhiteSpace(UpdateForm.Name))
+            {
+                UpdateForm.StatusId = SelectedStatus.Id;
+                UpdateForm.ServiceId = SelectedService.Id;
+                UpdateForm.ProjectManagerId = SelectedPM.Id;
+                UpdateForm.CustomerId = SelectedCustomer.Id;
+
+                var result = await _projectService.UpdateProjectAsync(DetailedView.Id, UpdateForm);
+                GoBack();
+            }
+            else
+                ErrorMessage = "Enter the Project name please";
+        }
+        catch
+        {
+            ErrorMessage = "Error updating the project: Please try again";
+        }
+
     }
 
     [RelayCommand]

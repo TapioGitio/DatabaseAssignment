@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using Data.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Presentation_WPF_HansAB.ViewModels;
 
@@ -28,7 +29,47 @@ public partial class ProjectAddViewModel : ObservableObject
         _customerService = customerService;
 
         Task.Run(() => LoadEntityIds());
+
+        // AI helped me with this to be able to check when properties changed
+        //thought mvvm would have a automatic way but tried and failed until I
+        //found this. It checks when some attributes change and run my method to validate.
+        //If it passes the button update becomes available
+        PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(SelectedStatus) ||
+                e.PropertyName == nameof(SelectedService) ||
+                e.PropertyName == nameof(SelectedPM) ||
+                e.PropertyName == nameof(SelectedCustomer))
+            {
+                CheckInput();
+            }
+        };
     }
+
+    private void CheckInput()
+    {
+        if (SelectedStatus != null
+            && SelectedService != null
+            && SelectedPM != null
+            && SelectedCustomer != null)
+        {
+            InputCorrect = true;
+            ErrorMessage = string.Empty;
+        }
+        else
+        {
+            InputCorrect = false;
+            ErrorMessage = "All selections must be made in order to update";
+
+        }
+    }
+
+    [ObservableProperty]
+    private string _errorMessage = string.Empty;
+
+    [ObservableProperty]
+    private bool _inputCorrect = false;
+
     [ObservableProperty]
     private ObservableCollection<Status> _statuses = new ObservableCollection<Status>();
 
@@ -66,13 +107,27 @@ public partial class ProjectAddViewModel : ObservableObject
     [RelayCommand]
     private async Task SaveProject()
     {
-        PForm.StatusId = SelectedStatus.Id;
-        PForm.ServiceId = SelectedService.Id;
-        PForm.ProjectManagerId = SelectedPM.Id;
-        PForm.CustomerId = SelectedCustomer.Id;
+        try
+        {
+            if (!string.IsNullOrWhiteSpace(PForm.Name)) {
+                PForm.StatusId = SelectedStatus.Id;
+                PForm.ServiceId = SelectedService.Id;
+                PForm.ProjectManagerId = SelectedPM.Id;
+                PForm.CustomerId = SelectedCustomer.Id;
 
-        await _projectService.CreateProjectAsync(PForm);
-        GoBack();
+                await _projectService.CreateProjectAsync(PForm);
+                GoBack();
+            }
+            else
+            {
+                ErrorMessage = "Enter the project name";
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+        }
+    
     }
 
     private async Task LoadEntityIds()
