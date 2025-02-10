@@ -28,6 +28,7 @@ public partial class ProjectAddViewModel : ObservableObject
         _projectManagerService = projectManagerService;
         _customerService = customerService;
 
+
         Task.Run(() => LoadEntityIds());
 
         // AI helped me with this to be able to check when properties changed
@@ -71,16 +72,16 @@ public partial class ProjectAddViewModel : ObservableObject
     private bool _inputCorrect = false;
 
     [ObservableProperty]
-    private ObservableCollection<Status> _statuses = new ObservableCollection<Status>();
+    private ObservableCollection<Status> _statuses = [];
 
     [ObservableProperty]
-    private ObservableCollection<Service> _services = new ObservableCollection<Service>();
+    private ObservableCollection<Service> _services = [];
 
     [ObservableProperty]
-    private ObservableCollection<ProjectManager> _pms = new ObservableCollection<ProjectManager>();
+    private ObservableCollection<ProjectManager> _pms = [];
 
     [ObservableProperty]
-    private ObservableCollection<Customer> _customers = new ObservableCollection<Customer>();
+    private ObservableCollection<Customer> _customers = [];
 
     [ObservableProperty]
     private ProjectRegistrationForm _pForm = new();
@@ -138,8 +139,12 @@ public partial class ProjectAddViewModel : ObservableObject
 
     private async Task LoadEntityIds()
     {
-        var statuses = await _statusService.ReadStatusAsync();
+        // Ai helped me with this listing of the entities
+        // it fetches all the attributes from the entities
+        // and adds them to a observableCollection to be able
+        // to pick a specific one in a combobox.
 
+        var statuses = await _statusService.ReadStatusAsync();
         foreach (var status in statuses)
         {
             Statuses.Add(status);

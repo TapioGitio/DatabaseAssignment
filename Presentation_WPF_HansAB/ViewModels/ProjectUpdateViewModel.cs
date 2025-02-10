@@ -25,16 +25,16 @@ public partial class ProjectUpdateViewModel : ObservableObject
     private string _errorMessage = string.Empty;
 
     [ObservableProperty]
-    private ObservableCollection<Status> _statuses = new();
+    private ObservableCollection<Status> _statuses = [];
 
     [ObservableProperty]
-    private ObservableCollection<Service> _services = new();
+    private ObservableCollection<Service> _services = [];
 
     [ObservableProperty]
-    private ObservableCollection<ProjectManager> _pms = new();
+    private ObservableCollection<ProjectManager> _pms = [];
 
     [ObservableProperty]
-    private ObservableCollection<Customer> _customers = new();
+    private ObservableCollection<Customer> _customers = [];
 
     [ObservableProperty]
     private ProjectDetailedView _detailedView;
