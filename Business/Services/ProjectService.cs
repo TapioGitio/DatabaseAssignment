@@ -60,6 +60,14 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         return result;
     }
 
+    public async Task<bool> ProjectDuplicateAsync(string projectName)
+    {
+        var search = await _projectRepository.DoesProjectExistAsync(projectName);
+        if (search)
+            return true;
+        return false;
+    }
+
     public async Task<bool> DeleteProjectAsync(int id)
     {
         var question = await _projectRepository.DoesItExistAsync(x => x.Id == id);

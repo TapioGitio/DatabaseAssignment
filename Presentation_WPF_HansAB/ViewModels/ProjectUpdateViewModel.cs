@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Presentation_WPF_HansAB.ViewModels;
 
@@ -90,7 +91,7 @@ public partial class ProjectUpdateViewModel : ObservableObject
         else
         {
             InputCorrect = false;
-            ErrorMessage = "All selections must be made in order to update";
+            ErrorMessage = " All selections must be made in order to update";
 
         }
     }
@@ -98,10 +99,17 @@ public partial class ProjectUpdateViewModel : ObservableObject
     [RelayCommand]
     private async Task UpdateProjectAsync()
     {
+        var chechIfDuplicate = await _projectService.ProjectDuplicateAsync(UpdateForm.Name);
 
         try
         {
-            if (!string.IsNullOrWhiteSpace(UpdateForm.Name))
+            if (string.IsNullOrWhiteSpace(UpdateForm.Name))
+                ErrorMessage = " Enter the project name please";
+
+            else if (chechIfDuplicate)
+                ErrorMessage = " No can do, a project with the same name already exists";
+
+            else
             {
                 UpdateForm.StatusId = SelectedStatus.Id;
                 UpdateForm.ServiceId = SelectedService.Id;
@@ -111,12 +119,12 @@ public partial class ProjectUpdateViewModel : ObservableObject
                 var result = await _projectService.UpdateProjectAsync(DetailedView.Id, UpdateForm);
                 GoBack();
             }
-            else
-                ErrorMessage = "Enter the Project name please";
+                
         }
-        catch
+        catch (Exception ex) 
         {
-            ErrorMessage = "Error updating the project: Please try again";
+            ErrorMessage = " Error updating the project: Please try again";
+            Debug.WriteLine(ex.Message);
         }
 
     }

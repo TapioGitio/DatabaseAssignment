@@ -24,7 +24,6 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
     public async Task<IEnumerable<Customer>> ReadCustomersAsync()
     {
         var entities = await _customerRepository.ReadAllAsync();
-
         var converted = entities.Select(CustomerFactory.Create);
 
         return converted;

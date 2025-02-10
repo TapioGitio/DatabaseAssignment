@@ -10,6 +10,7 @@ namespace Business.Interfaces
         Task<IEnumerable<ProjectOverallView>> ReadAllWithoutDetailsAsync();
         Task<ProjectDetailedView> ReadOneDetailedAsync(int id);
         Task<bool> UpdateProjectAsync(int id, ProjectUpdateForm form);
+        Task<bool> ProjectDuplicateAsync(string projectName);
         Task<bool> DeleteProjectAsync(int id);
     }
 

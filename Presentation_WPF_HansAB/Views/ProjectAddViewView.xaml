@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="{Binding ErrorMessage}"
-                   Foreground="Firebrick"/>
+                   Foreground="FloralWhite"/>
         
         <TextBlock Text="Project Creation"
                    Grid.Row="0"

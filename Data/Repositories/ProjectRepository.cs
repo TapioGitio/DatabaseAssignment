@@ -3,6 +3,8 @@ using Data.Entities;
 using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace Data.Repositories;
 
@@ -25,6 +27,22 @@ public class ProjectRepository(DataContext context, IMemoryCache cache) : BaseRe
         _cache.Set(cacheKey, result, TimeSpan.FromMinutes(4));
 
         return result;
+    }
+
+    public async Task<bool> DoesProjectExistAsync(string projectName)
+    {
+        try
+        {
+            var result = await _dbSet.FirstOrDefaultAsync(x => x.Name == projectName);
+            if (result == null) return false;
+            return true;
+
+        }
+        catch (Exception ex) 
+        {
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
     }
 }
 

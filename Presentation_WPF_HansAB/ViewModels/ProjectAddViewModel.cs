@@ -59,7 +59,7 @@ public partial class ProjectAddViewModel : ObservableObject
         else
         {
             InputCorrect = false;
-            ErrorMessage = "All selections must be made in order to update";
+            ErrorMessage = " All selections must be made in order to update";
 
         }
     }
@@ -107,9 +107,18 @@ public partial class ProjectAddViewModel : ObservableObject
     [RelayCommand]
     private async Task SaveProject()
     {
+        var chechIfDuplicate = await _projectService.ProjectDuplicateAsync(PForm.Name);
+
         try
         {
-            if (!string.IsNullOrWhiteSpace(PForm.Name)) {
+            if (string.IsNullOrWhiteSpace(PForm.Name))
+                ErrorMessage = " Enter Project Name please";
+
+            else if (chechIfDuplicate)
+                ErrorMessage = " A project with the same name already exists";
+
+            else
+            {
                 PForm.StatusId = SelectedStatus.Id;
                 PForm.ServiceId = SelectedService.Id;
                 PForm.ProjectManagerId = SelectedPM.Id;
@@ -118,13 +127,10 @@ public partial class ProjectAddViewModel : ObservableObject
                 await _projectService.CreateProjectAsync(PForm);
                 GoBack();
             }
-            else
-            {
-                ErrorMessage = "Enter the project name";
-            }
         }
         catch (Exception ex)
         {
+            ErrorMessage = " Error creating the project, try again later!";
             Debug.WriteLine(ex.Message);
         }
     
