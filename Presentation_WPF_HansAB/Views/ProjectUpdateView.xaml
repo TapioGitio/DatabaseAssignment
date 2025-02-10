@@ -27,14 +27,18 @@
         <StackPanel Grid.Row="0"
                     Grid.ColumnSpan="2"
                     Margin="326,10,0,240" 
-                    Grid.RowSpan="2">
-        <TextBlock 
-                   
-                   Text="Project Update"
-                   HorizontalAlignment="Left"
-                   FontSize="24"
-                   Foreground="Moccasin"
-                   FontWeight="bold"/>
+                    Grid.RowSpan="2"
+                    Orientation="Horizontal">
+            <TextBlock 
+                       Text="Project Update"
+                       HorizontalAlignment="Left"
+                       FontSize="24"
+                       Foreground="Moccasin"
+                       FontWeight="bold"/>
+            <TextBlock Text="{Binding DetailedView.Id}"
+                       Margin="10 13 0 0"
+                       FontWeight="bold"
+                       Foreground="Moccasin"/>
         </StackPanel>
 
         <StackPanel Grid.Column="0" Grid.Row="1"

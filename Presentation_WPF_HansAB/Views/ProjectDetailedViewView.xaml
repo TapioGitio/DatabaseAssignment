@@ -26,7 +26,10 @@
                         Margin="20 20 0 20"
                         Grid.Row="0"
                         />
-            <TextBlock Text="{Binding ProjectId}" FontWeight="Bold" Margin="10 33 0 0" Foreground="Moccasin" />
+            <TextBlock Text="{Binding ProjectId}" 
+                       FontWeight="Bold" 
+                       Margin="10 33 0 0" 
+                       Foreground="Moccasin" />
         </StackPanel>
         
         <Grid Grid.Row="1"
