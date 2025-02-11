@@ -48,10 +48,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
 
         var entity = await _projectRepository.ReadAsync(x => x.Id == id);
 
-        if (entity == null)
-            return false;
-
-        if (form == null)
+        if (entity == null || form == null)
             return false;
 
         var updatedEntity = ProjectFactory.Update(entity, form);
@@ -72,7 +69,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
     {
         var question = await _projectRepository.DoesItExistAsync(x => x.Id == id);
 
-        if (question == false)
+        if (!question)
             return false;
 
         return await _projectRepository.DeleteAsync(x => x.Id == id);

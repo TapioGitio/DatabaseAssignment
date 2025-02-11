@@ -60,7 +60,7 @@ public partial class ProjectAddViewModel : ObservableObject
         else
         {
             InputCorrect = false;
-            ErrorMessage = " All selections must be made in order to update";
+            ErrorMessage = " All selections must be made in order to Save";
 
         }
     }
