@@ -5,6 +5,7 @@ using Business.Models.SafeToDisplay;
 using Business.Models.UpdateForms;
 using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Business.Services;
 
@@ -17,8 +18,17 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         if (form == null || string.IsNullOrWhiteSpace(form.Name))
             return false;
 
-        var entity = ProjectFactory.Create(form);
-        return await _projectRepository.CreateAsync(entity);
+        try
+        {
+            var entity = ProjectFactory.Create(form);
+            return await _projectRepository.CreateAsync(entity);
+        }
+        catch (Exception ex)
+        {
+
+            Debug.WriteLine(ex.Message);
+            return false;
+        }
     }
 
     public async Task<IEnumerable<ProjectOverallView>> ReadAllWithoutDetailsAsync()
