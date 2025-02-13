@@ -9,5 +9,5 @@ public class DataContext(DbContextOptions options) : DbContext(options)
     public DbSet<StatusEntity> Status { get; set; }
     public DbSet<CustomerEntity> Customers { get; set; }
     public DbSet<ProjectManagerEntity> ProjectManagers { get; set; }
-
+    public DbSet<ServiceEntity> Services { get; set; }
 }

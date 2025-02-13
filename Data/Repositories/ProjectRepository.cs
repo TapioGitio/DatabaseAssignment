@@ -4,7 +4,6 @@ using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics;
-using System.Linq.Expressions;
 
 namespace Data.Repositories;
 
@@ -34,7 +33,8 @@ public class ProjectRepository(DataContext context, IMemoryCache cache) : BaseRe
         try
         {
             var result = await _dbSet.FirstOrDefaultAsync(x => x.Name == projectName);
-            if (result == null) return false;
+            if (result == null) 
+                return false;
             return true;
 
         }
