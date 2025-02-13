@@ -12,7 +12,6 @@ using System.Windows;
 
 namespace Presentation_WPF_HansAB;
 
-
 public partial class App : Application
 {
     private readonly IHost _host;

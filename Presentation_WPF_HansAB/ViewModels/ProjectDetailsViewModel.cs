@@ -91,11 +91,11 @@ public partial class ProjectDetailsViewModel : ObservableObject
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
 
-        var upgradeProject = await _projectService.ReadOneDetailedAsync(ProjectId);
+        var updateProject = await _projectService.ReadOneDetailedAsync(ProjectId);
 
-        var upgradeView = ActivatorUtilities.CreateInstance<ProjectUpdateViewModel>(_serviceProvider, upgradeProject);
+        var updateView = ActivatorUtilities.CreateInstance<ProjectUpdateViewModel>(_serviceProvider, updateProject);
 
-        mainViewModel.CurrentViewModel = upgradeView;
+        mainViewModel.CurrentViewModel = updateView;
     }
 }
 
