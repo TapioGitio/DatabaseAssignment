@@ -15,17 +15,21 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
 
     public async Task<bool> CreateProjectAsync(ProjectRegistrationForm form)
     {
-        if (form == null || string.IsNullOrWhiteSpace(form.Name))
-            return false;
+        await _projectRepository.BeginTransactionAsync();
 
         try
         {
+            if (form == null || string.IsNullOrWhiteSpace(form.Name))
+                return false;
+
             var entity = ProjectFactory.Create(form);
+            await _projectRepository.CommitTransactionAsync();
             return await _projectRepository.CreateAsync(entity);
+
         }
         catch (Exception ex)
         {
-
+            await _projectRepository.RollbackTransactionAsync();
             Debug.WriteLine(ex.Message);
             return false;
         }
@@ -55,16 +59,27 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
 
     public async Task<bool> UpdateProjectAsync(int id, ProjectUpdateForm form)
     {
+        await _projectRepository.BeginTransactionAsync();
 
-        var entity = await _projectRepository.ReadAsync(x => x.Id == id);
+        try
+        {
+            var entity = await _projectRepository.ReadAsync(x => x.Id == id);
 
-        if (entity == null || form == null)
+            if (entity == null || form == null)
+                return false;
+
+            var updatedEntity = ProjectFactory.Update(entity, form);
+
+            var result = await _projectRepository.UpdateAsync(x => x.Id == id, updatedEntity);
+            await _projectRepository.CommitTransactionAsync();
+            return result;
+        }
+        catch (Exception ex)
+        {
+            await _projectRepository.RollbackTransactionAsync();
+            Debug.WriteLine($"Could not update the specific project: { ex.Message}");
             return false;
-
-        var updatedEntity = ProjectFactory.Update(entity, form);
-
-        var result = await _projectRepository.UpdateAsync(x => x.Id == id, updatedEntity);
-        return result;
+        }
     }
 
     public async Task<bool> ProjectDuplicateAsync(string projectName)
@@ -77,11 +92,23 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
 
     public async Task<bool> DeleteProjectAsync(int id)
     {
-        var question = await _projectRepository.DoesItExistAsync(x => x.Id == id);
+        await _projectRepository.BeginTransactionAsync();
 
-        if (!question)
+        try
+        {
+            var question = await _projectRepository.DoesItExistAsync(x => x.Id == id);
+
+            if (!question)
+                return false;
+
+            await _projectRepository.CommitTransactionAsync();
+            return await _projectRepository.DeleteAsync(x => x.Id == id);
+        }
+        catch (Exception ex)
+        {
+            await _projectRepository.RollbackTransactionAsync();
+            Debug.WriteLine($"Could not remove: {id}, {ex.Message}");
             return false;
-
-        return await _projectRepository.DeleteAsync(x => x.Id == id);
+        }
     }
 }
