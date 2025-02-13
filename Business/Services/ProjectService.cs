@@ -23,9 +23,10 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
                 return false;
 
             var entity = ProjectFactory.Create(form);
-            await _projectRepository.CommitTransactionAsync();
-            return await _projectRepository.CreateAsync(entity);
+            var result = await _projectRepository.CreateAsync(entity);
 
+            await _projectRepository.CommitTransactionAsync();
+            return result;
         }
         catch (Exception ex)
         {
@@ -69,8 +70,8 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
                 return false;
 
             var updatedEntity = ProjectFactory.Update(entity, form);
-
             var result = await _projectRepository.UpdateAsync(x => x.Id == id, updatedEntity);
+
             await _projectRepository.CommitTransactionAsync();
             return result;
         }
@@ -92,7 +93,6 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
 
     public async Task<bool> DeleteProjectAsync(int id)
     {
-        await _projectRepository.BeginTransactionAsync();
 
         try
         {
@@ -101,12 +101,10 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
             if (!question)
                 return false;
 
-            await _projectRepository.CommitTransactionAsync();
             return await _projectRepository.DeleteAsync(x => x.Id == id);
         }
         catch (Exception ex)
         {
-            await _projectRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Could not remove: {id}, {ex.Message}");
             return false;
         }
