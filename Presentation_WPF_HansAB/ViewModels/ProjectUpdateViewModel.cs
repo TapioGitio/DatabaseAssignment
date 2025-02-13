@@ -92,7 +92,6 @@ public partial class ProjectUpdateViewModel : ObservableObject
         {
             InputCorrect = false;
             ErrorMessage = " All selections must be made in order to update";
-
         }
     }
 
@@ -119,14 +118,12 @@ public partial class ProjectUpdateViewModel : ObservableObject
                 var result = await _projectService.UpdateProjectAsync(DetailedView.Id, UpdateForm);
                 GoBack();
             }
-                
         }
         catch (Exception ex) 
         {
             ErrorMessage = " Error updating the project: Please try again";
             Debug.WriteLine(ex.Message);
         }
-
     }
 
     [RelayCommand]
