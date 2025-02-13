@@ -38,15 +38,19 @@ public partial class ProjectUpdateViewModel : ObservableObject
 
     [ObservableProperty]
     private ProjectDetailedView _detailedView;
+
     [ObservableProperty]
     private ProjectUpdateForm _updateForm = new();
 
     [ObservableProperty]
     private Status _selectedStatus = null!;
+
     [ObservableProperty]
     private Service _selectedService = null!;
+
     [ObservableProperty]
     private ProjectManager _selectedPM = null!;
+
     [ObservableProperty]
     private Customer _selectedCustomer = null!;
 
