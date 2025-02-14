@@ -19,7 +19,12 @@ public partial class ProjectAddViewModel : ObservableObject
     private readonly IProjectManagerService _projectManagerService;
     private readonly ICustomerService _customerService;
 
-    public ProjectAddViewModel(IServiceProvider serviceProvider, IProjectService projectService, IStatusService statusService, IServiceService serviceService, IProjectManagerService projectManagerService, ICustomerService customerService)
+    public ProjectAddViewModel(IServiceProvider serviceProvider, 
+                               IProjectService projectService, 
+                               IStatusService statusService, 
+                               IServiceService serviceService, 
+                               IProjectManagerService projectManagerService, 
+                               ICustomerService customerService)
     {
         _serviceProvider = serviceProvider;
         _projectService = projectService;
@@ -85,9 +90,6 @@ public partial class ProjectAddViewModel : ObservableObject
 
     [ObservableProperty]
     private ProjectRegistrationForm _pForm = new();
-
-    [ObservableProperty]
-    private ObservableCollection<ProjectEntity> _pEntity = [];
 
     [ObservableProperty]
     private Status _selectedStatus = null!;

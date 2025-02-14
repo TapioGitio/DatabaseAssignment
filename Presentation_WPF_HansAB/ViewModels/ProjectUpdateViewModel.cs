@@ -54,7 +54,13 @@ public partial class ProjectUpdateViewModel : ObservableObject
     [ObservableProperty]
     private Customer _selectedCustomer = null!;
 
-    public ProjectUpdateViewModel(IServiceProvider serviceProvider, ProjectDetailedView detailedView, IProjectService projectService , IStatusService statusService, IServiceService serviceService, IProjectManagerService projectManagerService, ICustomerService customerService)
+    public ProjectUpdateViewModel(IServiceProvider serviceProvider, 
+                                 ProjectDetailedView detailedView, 
+                                 IProjectService projectService , 
+                                 IStatusService statusService, 
+                                 IServiceService serviceService, 
+                                 IProjectManagerService projectManagerService, 
+                                 ICustomerService customerService)
     {
         _serviceProvider = serviceProvider;
         _projectService = projectService;
@@ -69,7 +75,7 @@ public partial class ProjectUpdateViewModel : ObservableObject
         // AI helped me with this to be able to check when properties changed
         //thought mvvm would have a automatic way but tried and failed until I
         //found this. It checks when some attributes change and run my method to validate.
-        //If it passes the button update becomes available
+        //If it passes the button update becomes available.
         PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == nameof(SelectedStatus) ||
