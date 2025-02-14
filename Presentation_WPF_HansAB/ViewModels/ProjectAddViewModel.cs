@@ -3,7 +3,6 @@ using Business.Models.RegForms;
 using Business.Models.SafeToDisplay;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Data.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -32,7 +31,6 @@ public partial class ProjectAddViewModel : ObservableObject
         _serviceService = serviceService;
         _projectManagerService = projectManagerService;
         _customerService = customerService;
-
 
         Task.Run(() => LoadEntityIds());
 
@@ -136,7 +134,6 @@ public partial class ProjectAddViewModel : ObservableObject
             ErrorMessage = " Error creating the project, try again later!";
             Debug.WriteLine(ex.Message);
         }
-    
     }
 
     private async Task LoadEntityIds()

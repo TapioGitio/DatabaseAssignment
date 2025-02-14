@@ -11,7 +11,6 @@ public partial class ProjectDetailsViewModel : ObservableObject
     private readonly IServiceProvider _serviceProvider;
     private readonly IProjectService _projectService;
 
-
     [ObservableProperty]
     private int _projectId;
 
@@ -93,6 +92,11 @@ public partial class ProjectDetailsViewModel : ObservableObject
 
         var updateProject = await _projectService.ReadOneDetailedAsync(ProjectId);
 
+        // Got help from AI to be able to send parameters through to another viewmodel
+        // like here im sending the updateProject to the ProjectUpdateViewModel
+        // so that the user can update the project with the correct data from the database.
+
+        // The GetRequiredService was not able to send parameters.
         var updateView = ActivatorUtilities.CreateInstance<ProjectUpdateViewModel>(_serviceProvider, updateProject);
 
         mainViewModel.CurrentViewModel = updateView;
