@@ -105,7 +105,7 @@
                          FontSize="14" 
                          />
 
-                <TextBlock Text="Price:" FontWeight="bold"/>
+                <TextBlock Text="Price $/h:" FontWeight="bold"/>
                 <TextBlock Text="{Binding Price}" 
                          Foreground="Black" 
                          FontSize="14" 
