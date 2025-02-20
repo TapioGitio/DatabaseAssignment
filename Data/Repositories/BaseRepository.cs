@@ -85,7 +85,6 @@ public abstract class BaseRepository<TEntity>(DataContext context, IMemoryCache 
         return result;
     }
 
-
     public virtual async Task<TEntity?> ReadAsync(Expression<Func<TEntity, bool>> expression, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeExpression = null)
     {
         IQueryable<TEntity> query = _dbSet;
